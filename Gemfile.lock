@@ -3,6 +3,11 @@ GEM
   specs:
     backports (3.3.0)
     eventmachine (1.0.3)
+    httparty (0.8.3)
+      multi_json (~> 1.0)
+      multi_xml
+    multi_json (1.7.9)
+    multi_xml (0.5.1)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -25,5 +30,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  httparty
   sinatra
   sinatra-contrib
