@@ -2,7 +2,14 @@ var http = require('http'),
   request = require('request');
 
 var app = http.createServer(function (req, resp) {
-  resp.setHeader("Access-Control-Allow-Origin", "*");
+  var origin;
+  if (req.headers.origin.match(/(localhost|\.dev|\.local)\:\d+$/)) {
+    origin = req.headers.origin;
+  } else {
+    origin = "http://springfieldopen.com";
+  }
+
+  resp.setHeader("Access-Control-Allow-Origin", origin);
   resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Authorization");
 
   if (req.method === "OPTIONS") {
