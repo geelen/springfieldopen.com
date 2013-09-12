@@ -7,6 +7,8 @@ app.config ($stateProvider, $urlRouterProvider) ->
     .state 'signed-out',
       url: '/'
       templateUrl: 'views/signed_out.html'
+      controller: 'SignedOutController'
     .state 'home',
       url: '/access_token/:token'
       templateUrl: 'views/home.html'
+      controller: 'HomeController'
