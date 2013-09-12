@@ -10,6 +10,9 @@ app.config ($stateProvider, $urlRouterProvider) ->
     .state 'route1',
       url: '/route1'
       templateUrl: 'views/route1.html'
+    .state 'route1.list',
+      url: '/list'
+      templateUrl: 'views/route1-list.html'
     .state 'route2',
       url: '/route2'
       templateUrl: 'views/route2.html'

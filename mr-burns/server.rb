@@ -42,7 +42,7 @@ get "/redirect" do
 
   auth_json = JSON.parse(auth_post.body)
   params_str = auth_json.map { |k,v| "#{k}=#{v}" }.join("&")
-  redirect "/?#{params_str}"
+  redirect "http://localhost:9000/#/access_token/#{auth_json['access_token']}"
 end
 
 # get "/api/*" do
