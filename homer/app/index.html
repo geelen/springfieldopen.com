@@ -21,13 +21,15 @@
 
 <h1>Springfield Open</h1>
 
-<input type="text" ng-model="lol">
+<div ui-view></div>
 
-<p>This is lol: {{ lol }}</p>
+<a href="#/route1">Go to Route 1</a>
+<a href="#/route2">Go back to Route 2</a>
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
