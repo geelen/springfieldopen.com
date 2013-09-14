@@ -12,3 +12,6 @@ app.config ($stateProvider, $urlRouterProvider) ->
       url: '/access_token/:token'
       templateUrl: 'views/home.html'
       controller: 'HomeController'
+    .state 'battle',
+      url: '/battle'
+      templateUrl: 'views/battle.html'
