@@ -1,2 +1,64 @@
 body {
+	background-color: darken(white, 10%);
+}
+
+.battle-body {
+	position: relative;
+	width: 320px;
+	height: 444px;
+	background-color: white;
+	overflow: hidden;
+}
+
+.battle-header {
+	height: 40px;
+	background-color: black;
+}
+
+%episode {
+	height: (444px - 40px) / 2;
+	position: relative;
+}
+
+.background-image {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-attachment: 50% 50%;
+	background-size: cover;
+	opacity: 0.2;
+}
+
+.top-episode {
+	@extend %episode;
+	.background-image {
+		background-image: url('http://images.wikia.com/simpsons/images/e/e0/Flame.gif');
+	}
+	.title-text {
+		text-align: left;
+	}
+}	
+
+.bottom-episode {
+	@extend %episode;
+	.background-image {
+		background-image: url('http://images.wikia.com/simpsons/images/4/47/Bart_vs_australia.png');
+	}
+	.title-text {
+		text-align: right;
+	}
+}
+
+.title-text {
+	padding: 80px 20px;
+}
+
+.vs-text {
+	position: absolute;
+	text-align: center;
+	width: 100%;
 }
