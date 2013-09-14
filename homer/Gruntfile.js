@@ -30,9 +30,9 @@ module.exports = function (grunt) {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
             },
-            compass: {
+            sass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
+                tasks: ['sass:dist', 'autoprefixer']
             },
             styles: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -134,29 +134,18 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        compass: {
-            options: {
-                sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                generatedImagesDir: '.tmp/images/generated',
-                imagesDir: '<%= yeoman.app %>/images',
-                javascriptsDir: '<%= yeoman.app %>/scripts',
-                fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: '<%= yeoman.app %>/bower_components',
-                httpImagesPath: '/images',
-                httpGeneratedImagesPath: '/images/generated',
-                httpFontsPath: '/styles/fonts',
-                relativeAssets: false
-            },
+        sass: {
             dist: {
-                options: {
-                    generatedImagesDir: '<%= yeoman.dist %>/images/generated'
-                }
+              files: [{
+                expand: true,
+                cwd: '<%= yeoman.app %>/styles',
+                src: '{,*/}*.scss',
+                dest: '.tmp/styles',
+                ext: '.css'
+              }]
             },
-            server: {
-                options: {
-                    debugInfo: true
-                }
+            options: {
+                debugInfo: true
             }
         },
         autoprefixer: {
@@ -315,7 +304,7 @@ module.exports = function (grunt) {
         },
         concurrent: {
             server: [
-                'compass',
+                'sass:dist',
                 'coffee:dist',
                 'copy:styles'
             ],
@@ -325,7 +314,7 @@ module.exports = function (grunt) {
             ],
             dist: [
                 'coffee',
-                'compass',
+                'sass:dist',
                 'copy:styles',
                 'imagemin',
                 'svgmin',
