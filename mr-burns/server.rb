@@ -15,7 +15,7 @@ get "/sign_in" do
     response_type: "code",
     scope: "identity",
     client_id: ENV['REDDIT_CLIENT'],
-    redirect_uri: "http://localhost:5000/redirect"
+    redirect_uri: ENV['REDDIT_REDIRECT_URL']
   }
   params_str = params.map { |k,v| "#{k}=#{v}" }.join("&")
   redirect "#{base_url}?#{params_str}"
@@ -33,7 +33,7 @@ get "/redirect" do
       state: params[:state],
       scope: 'identity',
       client_id: ENV['REDDIT_CLIENT'],
-      redirect_uri: "http://localhost:5000/redirect",
+      redirect_uri: ENV['REDDIT_REDIRECT_URL'],
       code: params[:code],
       grant_type: 'authorization_code'
     },

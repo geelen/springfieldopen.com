@@ -1,41 +1,9 @@
-<hmtl>
+<html>
   <head></head>
   <body>
     <h1>LOL HI</h1>
     <a href="/sign_in">
       Sign in!
     </a>
-
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript">
-      var urlParams;
-      (window.onpopstate = function () {
-           var match,
-               pl     = /\+/g,  // Regex for replacing addition symbol with a space
-               search = /([^&=]+)=?([^&]*)/g,
-               decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-               query  = window.location.search.substring(1);
-
-           urlParams = {};
-           while (match = search.exec(query))
-              urlParams[decode(match[1])] = decode(match[2]);
-      })();
-
-      console.log(urlParams)
-      // window.CALLBACK = function(data) {
-      //   console.log(data);
-      // };
-
-      $.ajax({
-        url: "http://localhost:5001/api/v1/me.json",
-        headers: {
-          authorization: "bearer " + urlParams.access_token
-        },
-        type: "GET"
-      }).success(function(data) {
-        console.log(data);
-      });
-
-    </script>
   </body>
-</hmtl>
+</html>
