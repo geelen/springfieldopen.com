@@ -10,7 +10,7 @@ var app = http.createServer(function (req, resp) {
   }
 
   resp.setHeader("Access-Control-Allow-Origin", origin);
-  resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Authorization");
+  resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Authorization,Content-Type");
 
   if (req.method === "OPTIONS") {
     resp.statusCode = 200;
