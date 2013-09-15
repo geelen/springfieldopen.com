@@ -13,7 +13,7 @@ get "/sign_in" do
     state: "signing_in",
     duration: "permanent",
     response_type: "code",
-    scope: "identity",
+    scope: "identity,submit,vote,read",
     client_id: ENV['REDDIT_CLIENT'],
     redirect_uri: ENV['REDDIT_REDIRECT_URL']
   }
@@ -31,7 +31,7 @@ get "/redirect" do
   auth_post = RedditApi.post('/api/v1/access_token',
     query: {
       state: params[:state],
-      scope: 'identity',
+      scope: 'identity,submit,vote,read',
       client_id: ENV['REDDIT_CLIENT'],
       redirect_uri: ENV['REDDIT_REDIRECT_URL'],
       code: params[:code],
