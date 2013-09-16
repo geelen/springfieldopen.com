@@ -2,6 +2,7 @@ require 'sinatra'
 require "sinatra/reloader" if development?
 require 'httparty'
 require 'json'
+require 'sinatra/cross_origin'
 
 get "/" do
   erb :index
@@ -45,7 +46,9 @@ get "/redirect" do
   redirect "http://localhost:9000/#/access_token/#{auth_json['access_token']}/refresh_token/#{auth_json['refresh_token']}"
 end
 
-get "/refresh" do
+get "/refresh.json" do
+  cross_origin
+
   auth_post = RedditApi.post('/api/v1/access_token',
     query: {
       state: 'signing_in',
