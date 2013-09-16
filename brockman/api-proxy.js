@@ -2,7 +2,7 @@ var http = require('http'),
   request = require('request');
 
 var app = http.createServer(function (req, resp) {
-  var origin;
+  var origin, target = "oauth.reddit.com";
   if (req.headers.origin.match(/(localhost|\.dev|\.local)\:\d+$/)) {
     origin = req.headers.origin;
   } else {
@@ -17,12 +17,12 @@ var app = http.createServer(function (req, resp) {
     resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     resp.end()
   } else {
-    request({
-      url: "https://oauth.reddit.com" + req.url,
-      headers: {
-        authorization: req.headers.authorization
-      }
-    }).pipe(resp);
+    req.headers.host = target;
+    req.pipe(request({
+      url: "https://" + target + req.url,
+      method: req.method,
+      headers: req.headers
+    })).pipe(resp);
   }
 });
 
