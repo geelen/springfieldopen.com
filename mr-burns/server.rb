@@ -48,6 +48,7 @@ end
 
 get "/refresh.json" do
   cross_origin
+  content_type :json
 
   auth_post = RedditApi.post('/api/v1/access_token',
     query: {
