@@ -1,31 +1,32 @@
 'use strict'
 app = angular.module 'homerApp'
 
-app.factory 'RedditApi', ($rootScope, $http) ->
+app.factory 'RedditApi', ($rootScope, $http, Utils, $q) ->
   apiHost = "http://localhost:5002"
 
   RedditApi = $rootScope.$new(true)
 
-  RedditApi.authToken = localStorage.RedditApi_authToken
-  RedditApi.refreshToken = localStorage.RedditApi_refreshToken
-  RedditApi.$watch 'authToken', (newVal) ->
-    console.log(newVal)
-    localStorage.RedditApi_authToken = newVal
-  RedditApi.$watch 'refreshToken', (newVal) ->
-    console.log(newVal)
-    localStorage.RedditApi_refreshToken = newVal
+  Utils.twoWayLocalStorageBind RedditApi, 'authToken', 'RedditApi_authToken'
+  Utils.twoWayLocalStorageBind RedditApi, 'refreshToken', 'RedditApi_refreshToken'
 
-  RedditApi.get = (url) ->
+  checkAuth = (ifAuthedDo) ->
+    if RedditApi.authToken?
+      ifAuthedDo()
+    else
+      $rootScope.loginNeeded = true
+      $q.defer().promise
+
+  RedditApi.get = (url) -> checkAuth ->
     $http
       headers:
         authorization: "bearer " + RedditApi.authToken
       method: "GET"
       url: apiHost + url
 
-  RedditApi.post = (url, data) ->
+  RedditApi.post = (url, data) -> checkAuth ->
     $http
       headers:
-        authorization: "bearer " + token
+        authorization: "bearer " + RedditApi.authToken
         'Content-Type': 'application/x-www-form-urlencoded'
       method: "POST"
       url: apiHost + url

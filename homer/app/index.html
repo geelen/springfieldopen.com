@@ -19,6 +19,12 @@
 </head>
 <body ng-app="homerApp" ng-controller="BodyController">
 
+<div ng-show='loginNeeded' ng-cloak>
+  <h1>Sign in, ya bum</h1>
+
+  <a href="http://mr-burns-springfieldopen.herokuapp.com/sign_in">GO!</a>
+</div>
+
 <div ui-view></div>
 
 <!-- build:js scripts/vendor.js -->
@@ -45,6 +51,7 @@
 <script type="text/javascript" src="scripts/controllers/signed_in_controller.js"></script>
 <script type="text/javascript" src="scripts/controllers/home_controller.js"></script>
 <script type="text/javascript" src="scripts/services/reddit_api.js"></script>
+<script type="text/javascript" src="scripts/services/utils.js"></script>
 <!-- endbuild -->
 </body>
 </html>
