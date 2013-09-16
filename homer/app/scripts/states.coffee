@@ -4,12 +4,11 @@ app.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise '/'
 
   $stateProvider
-    .state 'signed-out',
-      url: '/'
-      templateUrl: 'views/signed_out.html'
-      controller: 'SignedOutController'
-    .state 'home',
+    .state 'signed_in',
       url: '/access_token/:token/refresh_token/:refresh'
+      controller: 'SignedInController'
+    .state 'home',
+      url: '/'
       templateUrl: 'views/home.html'
       controller: 'HomeController'
     .state 'battle',
