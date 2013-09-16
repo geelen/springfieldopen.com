@@ -75,7 +75,7 @@ body {
 		background-image: url('http://images.wikia.com/simpsons/images/e/e0/Flame.gif');
 	}
 	.text-area {
-		
+
 	}
 	.title-text {
 		text-align: left;
@@ -100,7 +100,7 @@ body {
 	.discuss-link {
 		float: right;
 	}
-}	
+}
 
 .bottom-episode {
 	@extend %episode;
@@ -171,4 +171,11 @@ body {
 
 .episode-links {
 	font-size: 0.9em;
+}
+
+.voting-button {
+  color: lightgrey;
+  &.upvoted { color: orange; }
+  &.downvoted { color: blue; }
+  &.nothing { color: black; }
 }
