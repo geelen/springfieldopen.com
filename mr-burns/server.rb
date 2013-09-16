@@ -45,6 +45,24 @@ get "/redirect" do
   redirect "http://localhost:9000/#/access_token/#{auth_json['access_token']}/refresh_token/#{auth_json['refresh_token']}"
 end
 
+get "/refresh" do
+  auth_post = RedditApi.post('/api/v1/access_token',
+    query: {
+      state: 'signing_in',
+      scope: 'identity,submit,vote,read',
+      client_id: ENV['REDDIT_CLIENT'],
+      redirect_uri: ENV['REDDIT_REDIRECT_URL'],
+      refresh_token: params[:refresh_token],
+      grant_type: 'refresh_token'
+    },
+    body: {}
+  )
+
+  auth_json = JSON.parse(auth_post.body)
+  params_str = auth_json.map { |k,v| "#{k}=#{v}" }.join("&")
+  redirect "http://localhost:9000/#/access_token/#{auth_json['access_token']}/refresh_token/#{auth_json['refresh_token']}"
+end
+
 # get "/api/*" do
 #   RedditApi.get(...)
 # end
