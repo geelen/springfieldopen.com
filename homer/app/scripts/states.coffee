@@ -11,6 +11,11 @@ app.config ($stateProvider, $urlRouterProvider) ->
       url: '/'
       templateUrl: 'views/home.html'
       controller: 'HomeController'
+    .state 'test_battle',
+      url: '/test_battle'
+      templateUrl: 'views/test_battle.html'
+      controller: 'BattleController'
     .state 'battle',
       url: '/battle'
       templateUrl: 'views/battle.html'
+    

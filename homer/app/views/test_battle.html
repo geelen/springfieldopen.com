@@ -1,0 +1,11 @@
+<h2>TEST BATTLE</h2>
+
+<h3>You are: {{ currentUser.name }}</h3>
+
+<ul>
+  <li ng-repeat="item in battle_eps" class="episode{{$index + 1}}">
+    {{ item.score }}
+    <span class="voting-button" ng-click="votefor(item)" ng-class="{upvoted: item.likes === true}">⬆</span>
+    {{ item.title | remove_label }}
+  </li>
+</ul>
