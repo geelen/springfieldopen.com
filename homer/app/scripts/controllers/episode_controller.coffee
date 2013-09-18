@@ -5,8 +5,7 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
-    episode = response.data[0].data.children[0].data
-    contents = episode.selftext.split("\n")
+    contents = response.data[0].data.children[0].data.selftext.split("\n")
     $scope.image_url = contents[0]
     $scope.overview = contents[1]
 
