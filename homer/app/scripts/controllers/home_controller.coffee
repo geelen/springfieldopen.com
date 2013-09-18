@@ -4,7 +4,7 @@ app.controller "HomeController", ($scope, RedditApi) ->
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
 
-  RedditApi.get("/.json").then (response) ->
+  RedditApi.get("/r/SpringfieldOpenTest/.json").then (response) ->
     $scope.homepage = response.data.data.children.map (c) -> c.data
     console.log($scope.homepage)
 

@@ -1,43 +1,11 @@
-<div class="battle-body">
-	<div class="battle-header">
-		<div class="home-button">Home</div>
-		<div class="next-button">Next</div>
-	</div>
-	<div class="top-episode">
-		<div class="background-image"></div>
-		<div class="episode-container">
-			<div class="text-area">
-				<!-- <div class="episode-number">S03E10	</div> -->
-				<div class="title-text">Flaming Moe's</div>
-				<!-- <div class="episode-links">
-					<a>More Info</a>
-					<a>Discuss</a>
-				</div> -->	
-			</div>
-			<div class="vote-area">
-				<div class="vote-button">Vote</div>
-				<div class="vote-count">187</div>
-				<div class="discuss-link">Discuss</div>
-			</div>
-		</div>
-	</div>
-	<div class="vs-text">VS</div>
-	<div class="bottom-episode">
-		<div class="background-image"></div>
-		<div class="episode-container">
-			<div class="vote-area">
-				<div class="vote-button">Vote</div>
-				<div class="vote-count">411</div>
-				<div class="discuss-link">Discuss</div>
-			</div>
-			<div class="text-area">
-				<!-- <div class="episode-number">S06E16</div> -->
-				<div class="title-text">Bart vs Australia</div>
-<!-- 				<div class="episode-links">
-					<a>More Info</a>
-					<a>Discuss</a>
-				</div> -->
-			</div>
-		</div>		
-	</div>
-</div>
+<h2>BATTLE</h2>
+
+<h3>You are: {{ currentUser.name }}</h3>
+
+<ul>
+  <li ng-repeat="item in episodes" class="episode{{$index + 1}}">
+    {{ score(item) }}
+    <span class="voting-button" ng-click="votefor(item)" ng-class="{upvoted: item.likes === true}">⬆</span>
+    <a href="#/episode/{{ep_link(item)}}">{{ title(item) }}</a>
+  </li>
+</ul>
