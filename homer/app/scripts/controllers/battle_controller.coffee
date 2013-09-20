@@ -2,7 +2,7 @@ app = angular.module 'homerApp'
 
 app.filter 'remove_label', () -> (text) ->
   text.replace(/\[(.*?)\]/,"")
-
+  
 app.filter 'positive', () -> (score) ->
   if score >= 0 then score else 0
 
