@@ -3,7 +3,7 @@ var http = require('http'),
 
 var app = http.createServer(function (req, resp) {
   var origin, target = "oauth.reddit.com";
-  if (req.headers.origin.match(/(localhost|\.dev|\.local)\:\d+$/)) {
+  if (req.headers.origin.match(/(localhost|\.dev|\.local|127\.0\.0\.1)\:\d+$/)) {
     origin = req.headers.origin;
   } else {
     origin = "http://springfieldopen.com";
