@@ -3,6 +3,7 @@ require "sinatra/reloader" if development?
 require 'httparty'
 require 'json'
 require 'sinatra/cross_origin'
+require 'newrelic_rpm'
 
 get "/" do
   erb :index
