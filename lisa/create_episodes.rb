@@ -19,34 +19,24 @@ auth_token = begin
 	response["access_token"]
 end
 
-ep = episodes.first
+episodes.each do |ep|
 
-options = { 
-	headers: {
-		"authorization" => "bearer " + auth_token,
-		'Content-Type' => 'application/x-www-form-urlencoded'
-	}, 
-	body: {
-		api_type: 'json',
-		kind: 'self',
-		save: 'true',
-		title: ep,
-		text: "This is a test",
-		iden: "HGm5fjOEq9V406eISkLpzhCb68E8dPi4",
-		captcha: "yyhnnx",
-		sr: subreddit
-	}.map { |k,v| "#{k}=#{v}" }.join("&")
-}
-response = HTTParty.post('https://oauth.reddit.com/api/submit.json', options)
+  options = {
+    headers: {
+      "authorization" => "bearer " + auth_token,
+      'Content-Type' => 'application/x-www-form-urlencoded'
+    },
+    body: {
+      api_type: 'json',
+      kind: 'self',
+      save: 'true',
+      title: ep,
+      text: "This is a test",
+      sr: subreddit
+    }.map { |k,v| "#{k}=#{v}" }.join("&")
+  }
+  response = HTTParty.post('https://oauth.reddit.com/api/submit.json', options)
 
-# RedditApi.post = (url, data) -> checkAuth ->
-#     $http
-#       headers:
-#         authorization: "bearer " + RedditApi.authToken
-#         'Content-Type': 'application/x-www-form-urlencoded'
-#       method: "POST"
-#       url: apiHost + url
-#       data: ("#{k}=#{v}" for k,v of data).join("&")
+  puts JSON.pretty_generate(response)
 
-binding.pry
-
+end
