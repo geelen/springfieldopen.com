@@ -13,8 +13,8 @@ all_episodes = begin
 	full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" }
 end
 
-episodes = all_episodes[0..511]
+episodes = all_episodes[0...512]
 bracket = partition_seeds(episodes)
-test_bracket = partition_seeds((0..16).to_a)
+test_bracket = partition_seeds((0...16).to_a)
 
 binding.pry
