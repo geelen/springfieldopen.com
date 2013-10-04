@@ -1,16 +1,12 @@
 Bundler.require
+require './episode_loader.rb'
+require 'cgi'
 Dotenv.load
 
 subreddit = "SpringfieldOpenEps"
-existing_eps = begin
-	response = HTTParty.get("http://www.reddit.com/r/#{subreddit}.json")
-	response['data']['children'].map { |child| child['data']['title'] }
-end
 
-all_episodes = begin
-	full_hash = JSON.parse(File.read("data/episodes.json"))
-	full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" }
-end
+existing_eps = EpisodeLoader.reddit_hash.keys
+all_episodes = EpisodeLoader.local_imdb_list
 
 episodes = all_episodes - existing_eps
 
@@ -30,7 +26,7 @@ episodes.each do |ep|
       api_type: 'json',
       kind: 'self',
       save: 'true',
-      title: ep,
+      title: CGI.escape(ep),
       text: "This is a test",
       sr: subreddit
     }.map { |k,v| "#{k}=#{v}" }.join("&")

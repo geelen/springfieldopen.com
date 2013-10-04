@@ -1,4 +1,5 @@
 Bundler.require
+require './episode_loader.rb'
 
 def partition_seeds seeds
 	return seeds if seeds.length <= 2
@@ -8,31 +9,11 @@ def partition_seeds seeds
 	partitioned_seeds.map { |s| partition_seeds(s) }
 end
 
-subreddit = "SpringfieldOpenEps"
-reddit_hash = begin
-	response = HTTParty.get("http://www.reddit.com/r/#{subreddit}.json?limit=100")
-	full_episode_details = response['data']['children'].map { |child| child['data'] }
-	last_id = (full_episode_details.empty?) ? nil : full_episode_details[-1]['name']
-	while last_id
-		response = HTTParty.get("http://www.reddit.com/r/#{subreddit}.json?limit=100&after=#{last_id}")
-		new_episode_details = response['data']['children'].map { |child| child['data'] }
-		last_id = (new_episode_details.empty?) ? nil : new_episode_details[-1]['name']
-		full_episode_details += new_episode_details
-	end
-	Hash[full_episode_details.map { |ep| [ep['title'], ep['name']] }]
-end
-
-imdb_list = begin
-	full_hash = JSON.parse(File.read("data/episodes.json"))
-	full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" } 
-end
-
-updated_list = imdb_list.map { |episode| reddit_hash[episode] }
-
-episodes = updated_list[0...512]
-bracket = partition_seeds(episodes)
+reddit_hash = EpisodeLoader.reddit_hash
+episode_list = EpisodeLoader.local_imdb_list
+ranked_reddit_ids = episode_list.map { |episode| reddit_hash[episode] }
+bracket = partition_seeds(ranked_reddit_ids[0...512])
 
 File.open(File.dirname(__FILE__) + "/data/bracket.json", 'w') { |file|
 	file << bracket.to_json
 }
-
