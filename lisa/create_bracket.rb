@@ -8,13 +8,31 @@ def partition_seeds seeds
 	partitioned_seeds.map { |s| partition_seeds(s) }
 end
 
-all_episodes = begin
-	full_hash = JSON.parse(File.read("data/episodes.json"))
-	full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" }
+subreddit = "SpringfieldOpenEps"
+reddit_hash = begin
+	response = HTTParty.get("http://www.reddit.com/r/#{subreddit}.json?limit=100")
+	full_episode_details = response['data']['children'].map { |child| child['data'] }
+	last_id = (full_episode_details.empty?) ? nil : full_episode_details[-1]['name']
+	while last_id
+		response = HTTParty.get("http://www.reddit.com/r/#{subreddit}.json?limit=100&after=#{last_id}")
+		new_episode_details = response['data']['children'].map { |child| child['data'] }
+		last_id = (new_episode_details.empty?) ? nil : new_episode_details[-1]['name']
+		full_episode_details += new_episode_details
+	end
+	Hash[full_episode_details.map { |ep| [ep['title'], ep['name']] }]
 end
 
-episodes = all_episodes[0...512]
-bracket = partition_seeds(episodes)
-test_bracket = partition_seeds((0...16).to_a)
+imdb_list = begin
+	full_hash = JSON.parse(File.read("data/episodes.json"))
+	full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" } 
+end
 
-binding.pry
+updated_list = imdb_list.map { |episode| reddit_hash[episode] }
+
+episodes = updated_list[0...512]
+bracket = partition_seeds(episodes)
+
+File.open(File.dirname(__FILE__) + "/data/bracket.json", 'w') { |file|
+	file << bracket.to_json
+}
+
