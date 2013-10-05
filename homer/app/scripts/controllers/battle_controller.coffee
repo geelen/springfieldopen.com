@@ -12,17 +12,23 @@ app.controller "BattleController", ($scope, $filter, $stateParams, RedditApi) ->
 
   RedditApi.get("/comments/#{$stateParams.battle_id}.json?limit=2&sort=old").then (response) ->
     $scope.episodes = $filter('limitTo') (response.data[1].data.children.map (c) -> c.data), 2
+    $scope.episodes.map (ep) -> 
+    $scope.get_title($scope.episodes[0])
+    $scope.get_title($scope.episodes[1])
     $scope.episodes[0].other_item = $scope.episodes[1]
     $scope.episodes[1].other_item = $scope.episodes[0]
+    console.log($scope.episodes[0])
+
+  $scope.get_title = (item) ->
+    item.short_name = $scope.ep_short_name(item)
+    RedditApi.get("/#{item.short_name}.json").then (response) ->
+      item.title = response['data'][0]['data']['children'][0]['data']['title']
 
   $scope.score = (item) ->
     $filter('positive') (item.ups - item.downs)
 
-  $scope.title = (item) ->
-    item.body.split("\n")[0]
-
-  $scope.ep_link = (item) ->
-    item.body.split("\n")[1].split("_")[1]
+  $scope.ep_short_name = (item) ->
+    item.body.split("_")[1]
 
   vote = (item,direction) ->
     if direction > 0

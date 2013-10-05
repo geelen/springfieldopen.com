@@ -5,11 +5,10 @@
 <div><a href="#/battle/1mmyml">Test Battle (connected to reddit)</a></div>
 <div><a href="#/test_battle">First go at a mobile layout for a battle page</a></div>
 
-<!-- <ul>
-  <li ng-repeat="item in homepage">
-    <span class="voting-button" ng-click="upvote(item)" ng-class="{upvoted: item.likes === true}">⬆</span>
-    <span class="voting-button" ng-click="downvote(item)" ng-class="{downvoted: item.likes === false}">⬇</span>
-    <span class="voting-button" ng-click="cancel(item)" ng-class="{nothing: item.likes === null}">✖</span>
-    {{ item.title }}
+<h3>Battles:</h3>
+<ul>
+  <li ng-repeat="item in battles | orderBy:'title'">
+    <a href="#/battle/{{battle_short_name(item)}}">{{ item.title }}</a>
   </li>
-</ul> -->
+</ul>
+

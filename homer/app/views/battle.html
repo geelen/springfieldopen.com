@@ -6,6 +6,6 @@
   <li ng-repeat="item in episodes" class="episode{{$index + 1}}">
     {{ score(item) }}
     <span class="voting-button" ng-click="votefor(item)" ng-class="{upvoted: item.likes === true}">⬆</span>
-    <a href="#/episode/{{ep_link(item)}}">{{ title(item) }}</a>
+    <a href="#/episode/{{ep_short_name(item)}}">{{ item.title }}</a>
   </li>
 </ul>

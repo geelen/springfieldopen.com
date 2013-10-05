@@ -10,7 +10,6 @@ app.directive "commenttree", ($compile) ->
         {{ item.data.ups }}
         <span class="voting-button" ng-click="downvote(item)" ng-class="{downvoted: item.data.likes === false}">⬇</span>
         <span class="voting-button" ng-click="cancel(item)" ng-class="{nothing: item.data.likes === null}">✖</span>
-
         {{ item.data.author }}: {{item.data.body}}
         <div commenttree="item.data.replies.data.children"></div>
       </li>
@@ -29,8 +28,10 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
+    $scope.title = response.data[0].data.children[0].data.title
     ep_details = response.data[0].data.children[0].data.selftext.split("\n")
     $scope.image_url = ep_details[0]
     $scope.overview = ep_details[1]
     $scope.comments = response.data[1].data.children
     console.log($scope.comments)
+
