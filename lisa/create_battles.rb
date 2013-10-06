@@ -19,9 +19,9 @@ get_battles(episodes).each_with_index do |battle,i|
 	response = poster.post("Battle #{round+1}-#{i+1}","Test battle.")
 	puts JSON.pretty_generate(response)
 	post_name = response['json']['data']['name']
-	response = poster.comment(post_name,battle[0])
+	response = poster.comment(post_name,battle[0][0] + "\n" + battle[0][1])
 	puts JSON.pretty_generate(response)
-	response = poster.comment(post_name,battle[1])
+	response = poster.comment(post_name,battle[1][0] + "\n" + battle[1][1])
 	puts JSON.pretty_generate(response)
 end
 

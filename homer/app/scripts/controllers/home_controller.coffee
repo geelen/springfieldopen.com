@@ -6,6 +6,7 @@ app.controller "HomeController", ($scope, RedditApi) ->
 
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
     $scope.battles = response.data.data.children.map (c) -> c.data
+    console.log($scope.battles)
 
   $scope.battle_short_name = (item) ->
     item.name.split("_")[1]

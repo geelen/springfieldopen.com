@@ -10,7 +10,7 @@ def partition_seeds seeds
 end
 
 def episode_battles bracket, round_inds
-	return [[bracket,round_inds[1..-1]]] unless bracket.is_a? Array
+	return [[bracket,round_inds[1..-1]]] unless bracket.first.is_a? Array
 	battles = []
 	bracket.each_with_index { |b,i| 
 		ind = 2*round_inds.first + i
@@ -21,7 +21,7 @@ end
 
 reddit_hash = EpisodeLoader.reddit_hash
 episode_list = EpisodeLoader.local_imdb_list
-ranked_reddit_ids = episode_list.map { |episode| reddit_hash[episode] }
+ranked_reddit_ids = episode_list.map { |episode| [episode,reddit_hash[episode]] }
 bracket = partition_seeds(ranked_reddit_ids[0...16])
 episode_lineups = episode_battles(bracket, [0])
 
