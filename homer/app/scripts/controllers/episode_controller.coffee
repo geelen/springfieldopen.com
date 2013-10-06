@@ -30,8 +30,7 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
     $scope.title = response.data[0].data.children[0].data.title
     ep_details = response.data[0].data.children[0].data.selftext.split("\n")
-    $scope.image_url = ep_details[0]
-    $scope.overview = ep_details[1]
+    $scope.image_url = ep_details[0].split(" ")[0]
+    $scope.overview = ep_details[2..-1].join("\n")
     $scope.comments = response.data[1].data.children
-    console.log($scope.comments)
 

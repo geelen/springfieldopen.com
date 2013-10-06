@@ -8,7 +8,14 @@
 <h3>Battles:</h3>
 <ul>
   <li ng-repeat="item in battles | orderBy:'title'">
-    <a href="#/battle/{{battle_short_name(item)}}">{{ item.title }}</a>
+    <a href="#/battle/{{short_name(item)}}">{{ item.title }}</a>
+  </li>
+</ul>
+
+<h3>Episodes:</h3>
+<ul>
+  <li ng-repeat="item in episodes | orderBy:'title'">
+    <a href="#/episode/{{short_name(item)}}">{{ item.title }}</a>
   </li>
 </ul>
 

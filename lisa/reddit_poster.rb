@@ -27,6 +27,19 @@ class RedditPoster
 	  HTTParty.post('https://oauth.reddit.com/api/submit.json', options)
 	end
 
+	def replace_text thingname, text
+		body_hash = {
+      api_type: 'json',
+      thing_id: thingname,
+      text: CGI.escape(text),
+    }
+		options = {
+	    headers: @headers,
+	    body: hash_to_body(body_hash)
+	  }
+	  HTTParty.post('https://oauth.reddit.com/api/editusertext.json', options)
+	end
+
 	def comment thingname, text
 		body_hash = {
       api_type: 'json',
