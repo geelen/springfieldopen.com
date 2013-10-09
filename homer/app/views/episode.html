@@ -1,10 +1,13 @@
 <h2>EPISODE: {{title}}</h2>
 
-<h3>You are: {{ currentUser.name }}</h3>
+<h3>You are: {{ currentUser.name }} {{account_str()}}</h3>
 
-<div class="ep_overview">{{overview}}</div>
+<div class="ep_overview" ng-if="!admin_account">{{overview}}</div>
+<textarea class="ep_overview" ng-model="$parent.overview" ng-if="admin_account"></textarea>
 
-<img ng-src="{{image_url}}"/>
+<img ng-src="{{image_url}}" ng-click="select_image($index)" ng-repeat="image_url in images()"/>
+
+<div><button ng-click="save_changes()" ng-if="admin_account">Save</button></div>
 
 <h3>Discussion ({{ comments.length }}):</h3>
 

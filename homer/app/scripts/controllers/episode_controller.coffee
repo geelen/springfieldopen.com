@@ -26,11 +26,40 @@ app.directive "commenttree", ($compile) ->
 app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
+    $scope.admin_account = ($scope.currentUser.name == "springfieldopen")
 
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
     $scope.title = response.data[0].data.children[0].data.title
     ep_details = response.data[0].data.children[0].data.selftext.split("\n")
-    $scope.image_url = ep_details[0].split(" ")[0]
+    $scope.all_images = ep_details[0].split(" ")
     $scope.overview = ep_details[2..-1].join("\n")
     $scope.comments = response.data[1].data.children
+
+  $scope.account_str = () ->
+    if $scope.admin_account
+      " (Admin)"
+    else
+      ""
+
+  $scope.images = () ->
+    if !$scope.all_images
+      []
+    else if $scope.admin_account
+      $scope.all_images
+    else
+      $scope.all_images[0..0]
+  
+  $scope.select_image = (ind) ->
+    if ind < $scope.all_images.length
+      selected_image = $scope.all_images[ind]
+      $scope.all_images[ind] = $scope.all_images[0]
+      $scope.all_images[0] = selected_image
+
+  $scope.save_changes = () ->
+    image_str = $scope.all_images.join(" ")
+    ep_details = image_str + "\ngood\n" + $scope.overview
+    console.log(ep_details)
+    # update the self text of the post with this
+    
+
 
