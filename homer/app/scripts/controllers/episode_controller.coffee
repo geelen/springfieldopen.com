@@ -30,16 +30,14 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
 
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
     $scope.title = response.data[0].data.children[0].data.title
+    $scope.reddit_name = response.data[0].data.children[0].data.name
     ep_details = response.data[0].data.children[0].data.selftext.split("\n")
     $scope.all_images = ep_details[0].split(" ")
     $scope.overview = ep_details[2..-1].join("\n")
     $scope.comments = response.data[1].data.children
 
   $scope.account_str = () ->
-    if $scope.admin_account
-      " (Admin)"
-    else
-      ""
+    if $scope.admin_account then " (Admin)" else ""
 
   $scope.images = () ->
     if !$scope.all_images
@@ -59,7 +57,5 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi) ->
     image_str = $scope.all_images.join(" ")
     ep_details = image_str + "\ngood\n" + $scope.overview
     console.log(ep_details)
-    # update the self text of the post with this
+    RedditApi.post("/api/editusertext", api_type: "json", text: ep_details, thing_id: $scope.reddit_name)
     
-
-
