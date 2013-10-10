@@ -6,16 +6,26 @@
 <div><a href="#/test_battle">First go at a mobile layout for a battle page</a></div>
 
 <h3>Battles:</h3>
-<ul>
+<!-- <ul>
   <li ng-repeat="item in battles | orderBy:'title'">
-    <a href="#/battle/{{short_name(item)}}">{{ item.title }}</a>
+    <a href="#/battle/{{short_name(item.name)}}">{{ item.description }}</a>
   </li>
-</ul>
+</ul> -->
+<table style="table-layout: fixed">
+	<tr ng-repeat="item in battles | orderBy:'title'">
+    <td class="battle_cell"><a href="#/battle/{{short_name(item.name)}}">{{ item.title }}</a></td>
+    <td class="episode_cell" style="text-align: right">({{item.ep1_num}}) <a href="#/episode/{{short_name(item.ep1_name)}}">{{item.ep1_title}}</a></td>
+    <td class="score_cell">{{item.ep1_score}}</td>
+    <td class="vs_cell">vs</td>
+		<td class="score_cell">{{item.ep2_score}}</td>
+    <td class="episode_cell" style="text-align: left"><a href="#/episode/{{short_name(item.ep2_name)}}">{{item.ep2_title}}</a> ({{item.ep2_num}})</td>
+  </tr>
+</table>
 
-<h3>Episodes:</h3>
+<!-- <h3>Episodes:</h3>
 <ul>
   <li ng-repeat="item in episodes | orderBy:'title'">
-    <a href="#/episode/{{short_name(item)}}">{{ item.title }}</a>
+    <a href="#/episode/{{short_name(item.name)}}">{{ item.title }}</a>
   </li>
-</ul>
+</ul> -->
 

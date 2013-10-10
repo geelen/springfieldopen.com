@@ -16,7 +16,10 @@ poster = RedditPoster.new(refresh_token,subreddit)
 episodes = JSON.parse(File.read("data/episode_lineups#{round}.json"))
 
 get_battles(episodes).each_with_index do |battle,i|
-	response = poster.post("Battle #{round+1}-#{i+1}","Test battle.")
+	text = "#{round+1}\n#{i+1}\n"
+	text += "#{battle[0][0]}\n#{battle[0][1]}\n"
+	text += "#{battle[1][0]}\n#{battle[1][1]}"
+	response = poster.post("Battle #{round+1}-#{i+1}",text)
 	puts JSON.pretty_generate(response)
 	post_name = response['json']['data']['name']
 	response = poster.comment(post_name,battle[0][0] + "\n" + battle[0][1])

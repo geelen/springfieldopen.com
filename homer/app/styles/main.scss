@@ -185,3 +185,27 @@ body {
 	width: 400px;
 	min-height: 100px;
 }
+
+.battle_cell {
+	width: 150px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.episode_cell {
+	width: 250px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.vs_cell {
+	width: 30px;
+	text-align: center;
+}
+
+.score_cell {
+	width: 100px;
+	text-align: center;
+}
