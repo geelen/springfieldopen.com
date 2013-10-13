@@ -6,9 +6,15 @@ app.filter 'remove_label', () -> (text) ->
 app.filter 'positive', () -> (score) ->
   if score >= 0 then score else 0
 
-app.controller "BattleController", ($scope, $filter, $stateParams, RedditApi) ->
+app.controller "BattleController", ($scope, $filter, $stateParams, RedditApi, RandomPath) ->
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
+
+  $scope.next = () ->
+    RandomPath.next($stateParams.battle_id)
+
+  $scope.previous = () ->
+    RandomPath.prev($stateParams.battle_id)
 
   RedditApi.get("/comments/#{$stateParams.battle_id}.json?limit=2&sort=old").then (response) ->
     $scope.episodes = $filter('limitTo') (response.data[1].data.children.map (c) -> c.data), 2

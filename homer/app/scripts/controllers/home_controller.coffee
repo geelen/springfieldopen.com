@@ -8,10 +8,6 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
     $scope.battles = response.data.data.children.map (c) -> 
       $scope.load_battle(c.data)
-    $scope.battle_list = $filter('orderBy')($scope.battles.map (b) -> $scope.short_name(b.name))
-    next_battle = RandomPath.next($scope.battle_list,$scope.battle_list[0],9999)
-    console.log($scope.battle_list[0])
-    console.log(next_battle)
     
   $scope.load_battle = (battle) ->
     RedditApi.get("/comments/#{$scope.short_name(battle.name)}.json?limit=2&sort=old").then (response) ->
