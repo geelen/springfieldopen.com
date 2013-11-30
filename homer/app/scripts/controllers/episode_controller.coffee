@@ -16,6 +16,7 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
     $scope.overview = ep_details[2..-1].join("\n")
     $scope.comment_data = response.data[1].data
     $scope.comment_data.name = $scope.reddit_name
+    console.log($scope.comments())
 
   $scope.comments = () -> 
     Utils.flatten($scope.comment_data.children)

@@ -11,12 +11,18 @@
 
 <h3>Discussion ({{ comment_data.children.length }}):</h3>
 
-<ul>
-	<li ng-repeat="comment in comments()">
-		<div style="padding-left: {{comment.data.depth*25}}px">
-			<div>{{comment.data.body}}</div>
-			<textarea type="text" ng-model="comment.data.new_reply"></textarea>
-			<button ng-click="add_comment(comment.data)">Add Comment</button>
-		</div>
-	</li>
-</ul>
+<div ng-repeat="comment in comments()">
+	<div style="padding-left: {{comment.data.depth*25}}px">
+		{{comment.data.author}}: {{comment.data.body}}
+	</div>
+	<div style="padding-left: {{(comment.data.depth+1)*25}}px">
+		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
+		<button ng-click="add_comment(comment.data)">Reply</button>
+	</div>
+</div>
+<div>
+	<div>
+		<textarea type="text" ng-model="comment_data.new_reply"></textarea>
+		<button ng-click="add_comment(comment_data)">Add New Comment</button>
+	</div>
+</div>
