@@ -50,3 +50,19 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
         $scope.comment_data = new_comments.data[1].data
         $scope.comment_data.name = $scope.reddit_name
     
+  $scope.expand = (comment) ->
+    comment.data.collapsed = false
+
+  $scope.collapse = (comment) ->
+    comment.data.collapsed = true
+
+  $scope.show_expand = (comment) ->
+    collapsed = (comment.data.collapsed == true)
+    has_children = (comment.data.replies != "")
+    return (collapsed && has_children)
+
+  $scope.show_collapse = (comment) ->
+    expanded = (comment.data.collapsed != true)
+    has_children = (comment.data.replies != "")
+    return (expanded && has_children)
+

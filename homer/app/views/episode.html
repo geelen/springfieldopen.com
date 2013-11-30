@@ -11,13 +11,24 @@
 
 <h3>Discussion ({{ comment_data.children.length }}):</h3>
 
-<div ng-repeat="comment in comments()">
-	<div style="padding-left: {{comment.data.depth*25}}px">
-		{{comment.data.author}}: {{comment.data.body}}
+<div ng-repeat="comment in comments()" style="padding-left: {{comment.data.depth*40}}px">
+	{{ comment.data.ups }} / {{ comment.data.downs }}
+	<span class="voting-button" ng-click="vote_up(comment)" ng-class="{upvoted: comment.data.likes === true}">⬆</span>
+  <span class="voting-button" ng-click="vote_down(comment)" ng-class="{upvoted: comment.data.likes === false}">⬇</span>
+	<div>
+		{{comment.data.author}}:
 	</div>
-	<div style="padding-left: {{(comment.data.depth+1)*25}}px">
+	<div style="padding: 10px">
+		{{comment.data.body}}
+	</div>
+	<button ng-if="show_expand(comment)" ng-click="expand(comment)">Expand</button>
+	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
+	<button>Reply</button>
+	<button>Edit</button>
+	<button>Delete</button>
+	<div style="padding-left: 40px">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
-		<button ng-click="add_comment(comment.data)">Reply</button>
+		<div><button ng-click="add_comment(comment.data)">Submit</button></div>
 	</div>
 </div>
 <div>
