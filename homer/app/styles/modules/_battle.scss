@@ -1,12 +1,12 @@
 .battle {
-
-
-
+  position: relative;
+  overflow: hidden;
 }
 
 
 %battle-episode {
-  padding: 8em;
+  float: left;
+  width: 50%;
 }
 
 .battle-episode-first {
@@ -15,4 +15,27 @@
 
 .battle-episode-second {
   @extend %battle-episode;
+}
+
+.battle-episode-image {
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.battle-vs {
+  position: absolute;
+  background-color: $ball_green;
+  color: black;
+  padding: 0.4em;
+  font-size: 2.5em;
+  font-weight: bolder;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  box-shadow: inset 0 2px 1px rgba(white, 0.4), 0 0 12px rgba(black, 0.4);
+  margin-left: -1em;
+  margin-top: -1em;
 }
