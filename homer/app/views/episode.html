@@ -25,8 +25,8 @@
 	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
 	<button ng-if="!show_reply_box(comment)" ng-click="toggle_reply(comment,true)">Add Reply</button>
 	<button ng-if="show_reply_box(comment)" ng-click="toggle_reply(comment,false)">Cancel Reply</button>
-	<button>Edit</button>
-	<button>Delete</button>
+	<button ng-if="my_comment(comment)">Edit</button>
+	<button ng-if="my_comment(comment)" ng-click="delete_comment(comment)">Delete</button>
 	<div ng-if="show_reply_box(comment)" style="padding-left: 40px">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
 		<div><button ng-click="add_comment(comment.data)">Submit</button></div>
@@ -35,6 +35,6 @@
 <div>
 	<div>
 		<textarea type="text" ng-model="comment_data.new_reply"></textarea>
-		<button ng-click="add_comment(comment_data)">Add New Comment</button>
+		<div><button ng-click="add_comment(comment_data)">Add New Comment</button></div>
 	</div>
 </div>

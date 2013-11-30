@@ -46,9 +46,12 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
   $scope.add_comment = (comment_data) ->
     RedditApi.post("/api/comment", api_type: "json", text: comment_data.new_reply, thing_id: comment_data.name).then (response) ->
       comment_data.new_reply = ""
-      RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (new_comments) ->
-        $scope.comment_data = new_comments.data[1].data
-        $scope.comment_data.name = $scope.reddit_name
+      $scope.retrieve_comments()
+
+  $scope.retrieve_comments = () ->
+    RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (new_comments) ->
+      $scope.comment_data = new_comments.data[1].data
+      $scope.comment_data.name = $scope.reddit_name    
     
   $scope.expand = (comment) ->
     comment.data.collapsed = false
@@ -97,3 +100,10 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
       comment.data.downs += 1
       RedditApi.post("/api/vote", dir: -1, id: comment.data.name)
     
+  $scope.my_comment = (comment) ->
+    comment.data.author == $scope.currentUser.name
+
+  $scope.delete_comment = (comment) ->
+    RedditApi.post("/api/del", id: comment.data.name).then (response) ->
+      $scope.retrieve_comments()
+
