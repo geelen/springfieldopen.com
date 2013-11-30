@@ -1,0 +1,18 @@
+.battle {
+
+
+
+}
+
+
+%battle-episode {
+  padding: 8em;
+}
+
+.battle-episode-first {
+  @extend %battle-episode;
+}
+
+.battle-episode-second {
+  @extend %battle-episode;
+}

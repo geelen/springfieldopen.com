@@ -3,11 +3,11 @@
 }
 
 .main-banner-headline {
-  background: rgb(0, 125, 175);
+  background: $sky_blue;
+  color: $light_grey;
   overflow: hidden;
   padding-top: 2em;
 
-  color: white;
   h1 {
     font-size: 3em;
   }
@@ -37,7 +37,7 @@
 .main-banner-tagline {
   padding: 2em;
 
-  background-color: #ffbc73;
+  background-color: $canyon_orange;
   h2 {
     font-size: 2.5em;
     font-weight: lighter;

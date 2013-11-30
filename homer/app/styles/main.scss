@@ -1,6 +1,9 @@
 @import '../bower_components/normalize-scss/normalize';
 
+@import 'colors';
 @import 'base';
 
 @import 'modules/header';
 @import 'modules/main-banner';
+@import 'modules/battle-list';
+@import 'modules/battle';
