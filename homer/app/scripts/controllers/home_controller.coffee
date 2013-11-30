@@ -1,14 +1,16 @@
 app = angular.module 'homerApp'
 
+app.controller "DummyHomeController", ($scope) ->
+
 app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
-    $scope.battles = response.data.data.children.map (c) -> 
+    $scope.battles = response.data.data.children.map (c) ->
       $scope.load_battle(c.data)
-    
+
   $scope.load_battle = (battle) ->
     RedditApi.get("/comments/#{$scope.short_name(battle.name)}.json?limit=2&sort=old").then (response) ->
       battle_eps = $filter('limitTo') (response.data[1].data.children.map (c) -> c.data), 2
@@ -43,10 +45,10 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
   $scope.get_episodes = () ->
     RedditApi.get("/r/SpringfieldOpenEps.json?limit=100").then (response) ->
       $scope.get_episodes_after_helper(response)
-      
+
   $scope.episodes = []
   # $scope.get_episodes()
-  
+
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
 
