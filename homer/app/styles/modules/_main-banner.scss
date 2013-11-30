@@ -1,0 +1,32 @@
+.main-banner {
+  text-align: center;
+}
+
+%main-banner-common {
+  padding: 3em;
+}
+
+.main-banner-headline {
+  @extend %main-banner-common;
+  background: rgb(0,125,175) url('http://i.imgur.com/1mUWw6f.png') 0 100% no-repeat;
+  background-size-y: 100%;
+
+  color: white;
+  h1 {
+    font-size: 3em;
+  }
+
+  img {
+    max-width: 80%;
+  }
+}
+
+.main-banner-tagline {
+  @extend %main-banner-common;
+
+  background-color: #ffbc73;
+  h2 {
+    font-size: 2.5em;
+    font-weight: lighter;
+  }
+}
