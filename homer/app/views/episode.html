@@ -9,6 +9,8 @@
 
 <div><button ng-click="save_changes()" ng-if="admin_account">Save</button></div>
 
-<h3>Discussion ({{ comments.length }}):</h3>
+<h3>Discussion ({{ comment_data.children.length }}):</h3>
 
-<ul commenttree="comments"></ul>
+<ul>
+	<div commenttree="comment_data"></div>
+</ul>
