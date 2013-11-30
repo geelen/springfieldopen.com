@@ -1,7 +1,8 @@
 body {
   font: normal 16px Helvetica;
 
-  .breakpoint-mobile & {
+  .breakpoint-mobile &,
+  .breakpoint-phablet & {
     font: normal 12px Helvetica;
   }
   .breakpoint-tablet & {

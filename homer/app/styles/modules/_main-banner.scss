@@ -9,7 +9,12 @@
 .main-banner-headline {
   @extend %main-banner-common;
   background: rgb(0,125,175) url('http://i.imgur.com/1mUWw6f.png') 50% 100% no-repeat;
-  background-size-y: 100%;
+
+  background-size: contain;
+  .breakpoint-mobile &,
+  .breakpoint-phablet & {
+    background-size: initial;
+  }
 
   color: white;
   h1 {
@@ -18,7 +23,7 @@
 
   img {
     max-width: 80%;
-    padding-bottom: 12em;
+    padding-bottom: 220px;
   }
 }
 
@@ -30,4 +35,7 @@
     font-size: 2.5em;
     font-weight: lighter;
   }
+}
+.main-banner-tagline-reddit-logo {
+  height: 1.26em;
 }
