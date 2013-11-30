@@ -40,8 +40,10 @@
   padding-top: 100%;
   background-size: cover;
   background-position: 50% 50%;
+  border: 1px solid #666;
 }
 
+$text_shadow: darken($ball_green, 10%);
 .battle-vs {
   position: absolute;
   background-color: $ball_green;
@@ -52,9 +54,11 @@
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  box-shadow: inset 0 2px 1px rgba(white, 0.4), 0 0 12px rgba(black, 0.4);
   margin-left: -1em;
   margin-top: -1em;
+  border: 1px solid #666;
+  overflow: hidden;
+  text-shadow: 1px 1px $text_shadow, 2px 2px $text_shadow, 3px 3px $text_shadow, 4px 4px $text_shadow, 5px 5px $text_shadow, 6px 6px $text_shadow, 7px 7px $text_shadow, 8px 8px $text_shadow, 9px 9px $text_shadow, 10px 10px $text_shadow, 11px 11px $text_shadow, 12px 12px $text_shadow, 13px 13px $text_shadow, 14px 14px $text_shadow, 15px 15px $text_shadow, 16px 16px $text_shadow, 17px 17px $text_shadow, 18px 18px $text_shadow, 19px 19px $text_shadow, 20px 20px $text_shadow, 21px 21px $text_shadow, 22px 22px $text_shadow, 23px 23px $text_shadow, 24px 24px $text_shadow, 25px 25px $text_shadow, 26px 26px $text_shadow;
 }
 
 .battle-episode-voting {
