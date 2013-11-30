@@ -107,3 +107,12 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
     RedditApi.post("/api/del", id: comment.data.name).then (response) ->
       $scope.retrieve_comments()
 
+  $scope.show_editing = (comment) ->
+    comment.data.editing == true
+
+  $scope.toggle_editing = (comment,state) ->
+    if state == false
+      RedditApi.post("/api/editusertext", api_type: "json", text: comment.data.body, thing_id: comment.data.name).then (response) ->
+        comment.data.editing = false
+    else
+      comment.data.editing = true

@@ -18,14 +18,18 @@
 	<div>
 		{{comment.data.author}}:
 	</div>
-	<div style="padding: 10px">
+	<div style="padding: 10px" ng-if="!show_editing(comment)">
 		{{comment.data.body}}
+	</div>
+	<div style="padding: 10px" ng-if="show_editing(comment)">
+		<textarea type="text" ng-model="comment.data.body"></textarea>
 	</div>
 	<button ng-if="show_expand(comment)" ng-click="expand(comment)">Expand</button>
 	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
 	<button ng-if="!show_reply_box(comment)" ng-click="toggle_reply(comment,true)">Add Reply</button>
 	<button ng-if="show_reply_box(comment)" ng-click="toggle_reply(comment,false)">Cancel Reply</button>
-	<button ng-if="my_comment(comment)">Edit</button>
+	<button ng-if="my_comment(comment) && !show_editing(comment)" ng-click="toggle_editing(comment,true)">Edit</button>
+	<button ng-if="my_comment(comment) && show_editing(comment)" ng-click="toggle_editing(comment,false)">Save</button>
 	<button ng-if="my_comment(comment)" ng-click="delete_comment(comment)">Delete</button>
 	<div ng-if="show_reply_box(comment)" style="padding-left: 40px">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
