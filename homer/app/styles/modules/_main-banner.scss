@@ -2,33 +2,33 @@
   text-align: center;
 }
 
-%main-banner-common {
-  padding: 2em;
-}
-
 .main-banner-headline {
-  @extend %main-banner-common;
-  background: rgb(0,125,175) url('http://i.imgur.com/1mUWw6f.png') 50% 100% no-repeat;
-
-  background-size: contain;
-  .breakpoint-mobile &,
-  .breakpoint-phablet & {
-    background-size: initial;
-  }
+  background: rgb(0, 125, 175);
+  overflow: hidden;
+  padding-top: 2em;
 
   color: white;
   h1 {
     font-size: 3em;
   }
+}
 
+.main-banner-donut {
+  max-width: 80%;
+  position: relative;
+  z-index: 0;
+}
+
+.main-banner-background {
   img {
-    max-width: 80%;
-    padding-bottom: 220px;
+    width: 100%;
+    min-width: 800px;
+    margin-top: -90px;
   }
 }
 
 .main-banner-tagline {
-  @extend %main-banner-common;
+  padding: 2em;
 
   background-color: #ffbc73;
   h2 {
@@ -36,6 +36,7 @@
     font-weight: lighter;
   }
 }
+
 .main-banner-tagline-reddit-logo {
   height: 1.26em;
 }
