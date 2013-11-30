@@ -23,10 +23,11 @@
 	</div>
 	<button ng-if="show_expand(comment)" ng-click="expand(comment)">Expand</button>
 	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
-	<button>Reply</button>
+	<button ng-if="!show_reply_box(comment)" ng-click="toggle_reply(comment,true)">Add Reply</button>
+	<button ng-if="show_reply_box(comment)" ng-click="toggle_reply(comment,false)">Cancel Reply</button>
 	<button>Edit</button>
 	<button>Delete</button>
-	<div style="padding-left: 40px">
+	<div ng-if="show_reply_box(comment)" style="padding-left: 40px">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
 		<div><button ng-click="add_comment(comment.data)">Submit</button></div>
 	</div>

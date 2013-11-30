@@ -66,3 +66,10 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
     has_children = (comment.data.replies != "")
     return (expanded && has_children)
 
+  $scope.toggle_reply = (comment,state) ->
+    comment.data.replying = state
+    console.log($scope.show_reply_box(comment))
+
+  $scope.show_reply_box = (comment) ->
+    comment.data.replying == true
+
