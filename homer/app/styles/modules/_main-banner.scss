@@ -20,11 +20,18 @@
 }
 
 .main-banner-background {
-  img {
-    width: 100%;
-    min-width: 800px;
-    margin-top: -90px;
+  background: url('http://i.imgur.com/1mUWw6f.png') 50% 0% no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 334px;
+  margin-top: -90px;
+
+  .breakpoint-desktop &,
+  .breakpoint-wide & {
+    padding-top: 40%;
+    height: 0;
   }
+
 }
 
 .main-banner-tagline {
