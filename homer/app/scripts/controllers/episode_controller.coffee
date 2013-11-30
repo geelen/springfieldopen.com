@@ -68,8 +68,32 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
 
   $scope.toggle_reply = (comment,state) ->
     comment.data.replying = state
-    console.log($scope.show_reply_box(comment))
 
   $scope.show_reply_box = (comment) ->
     comment.data.replying == true
 
+  $scope.vote_up = (comment) -> 
+    if (comment.data.likes == true)
+      comment.data.likes = null
+      comment.data.ups -= 1
+      RedditApi.post("/api/vote", dir: 0, id: comment.data.name)
+    else
+      if comment.data.likes == false
+        comment.data.downs -= 1  
+      comment.data.likes = true
+      comment.data.ups += 1
+      RedditApi.post("/api/vote", dir: 1, id: comment.data.name)
+
+  $scope.vote_down = (comment) -> 
+    console.log("voting down")
+    if (comment.data.likes == false)
+      comment.data.likes = null
+      comment.data.downs -= 1
+      RedditApi.post("/api/vote", dir: 0, id: comment.data.name)
+    else
+    if comment.data.likes == true
+        comment.data.ups -= 1
+      comment.data.likes = false
+      comment.data.downs += 1
+      RedditApi.post("/api/vote", dir: -1, id: comment.data.name)
+    
