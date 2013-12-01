@@ -46,12 +46,40 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
   $scope.add_comment = (comment_data) ->
     RedditApi.post("/api/comment", api_type: "json", text: comment_data.new_reply, thing_id: comment_data.name).then (response) ->
       comment_data.new_reply = ""
+      comment_data.replying = false
       $scope.retrieve_comments()
 
   $scope.retrieve_comments = () ->
     RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (new_comments) ->
-      $scope.comment_data = new_comments.data[1].data
-      $scope.comment_data.name = $scope.reddit_name    
+      $scope.update_comment_tree($scope.comment_data.children,new_comments.data[1].data.children)
+
+  $scope.update_comment_tree = (old_comments,new_comments) ->
+    old_comments_map = {}
+    angular.forEach old_comments, (value) ->
+      old_comments_map[value.data.name] = value
+    new_comments_map = {}
+    new_comments_to_add = []
+    angular.forEach new_comments, (value) ->
+      new_comments_map[value.data.name] = value
+      if !old_comments_map[value.data.name]
+        new_comments_to_add.push(value)
+    angular.forEach old_comments, (value) ->
+      new_value = new_comments_map[value.data.name]
+      if new_value
+        value.data.author = new_value.data.author
+        value.data.body = new_value.data.body
+        value.data.ups = new_value.data.ups
+        value.data.downs = new_value.data.downs
+        value.data.likes = new_value.data.likes
+        if (new_value.data.replies!="")
+          if (value.data.replies!="")
+            $scope.update_comment_tree(value.data.replies.data.children,new_value.data.replies.data.children)
+          else
+            value.data.replies = new_value.data.replies
+        else
+          value.data.replies = ""
+    angular.forEach new_comments_to_add, (value) ->
+      old_comments.push(value)
     
   $scope.expand = (comment) ->
     comment.data.collapsed = false
