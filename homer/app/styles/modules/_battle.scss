@@ -1,26 +1,53 @@
 .battle {
   position: relative;
   overflow: hidden;
-  border-top: 0.5em solid $light_grey;
-  padding: 2em 2em 3em;
+  border-top: 0.5em solid $court_green;
+  padding: 2em 0em 3em;
+  text-align: center;
 
-  &::before {
+  &:first-of-type::before {
     content: '';
     position: absolute;
     left: 50%;
     margin-left: -0.25em;
     width: 0.5em;
     height: 1em;
-    background-color: $light_grey;
-  }
-  &::before {
+    background-color: $court_green;
     top: 0;
   }
 }
 
+.battle-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 1000px;
+}
+
+%battle-episode-info {
+  position: absolute;
+  top: 50%;
+  font-size: 2.5em;
+  margin-top: -1em;
+}
+
+.battle-episode-first-info {
+  @extend %battle-episode-info;
+  left: 0.5em;
+
+}
+
+.battle-episode-second-info {
+  @extend %battle-episode-info;
+  right: 0.5em;
+}
+
+.battle-center-column {
+  margin: 0em 5em 0em;
+}
 
 %battle-episode {
-  float: left;
+  display: inline-block;
   width: 50%;
 }
 
@@ -34,7 +61,7 @@
   text-align: left;
 }
 
-.battle-episode-image {
+%battle-episode-image {
   width: 100%;
   height: 0;
   padding-top: 100%;
@@ -43,47 +70,24 @@
   border: 1px solid #666;
 }
 
-$text_shadow: darken($ball_green, 10%);
-.battle-vs {
-  position: absolute;
-  background-color: $ball_green;
-  color: black;
-  padding: 0.4em;
-  font-size: 2.5em;
-  font-weight: bolder;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  margin-left: -1em;
-  margin-top: -1em;
-  border: 1px solid #666;
-  overflow: hidden;
-  text-shadow: 1px 1px $text_shadow, 2px 2px $text_shadow, 3px 3px $text_shadow, 4px 4px $text_shadow, 5px 5px $text_shadow, 6px 6px $text_shadow, 7px 7px $text_shadow, 8px 8px $text_shadow, 9px 9px $text_shadow, 10px 10px $text_shadow, 11px 11px $text_shadow, 12px 12px $text_shadow, 13px 13px $text_shadow, 14px 14px $text_shadow, 15px 15px $text_shadow, 16px 16px $text_shadow, 17px 17px $text_shadow, 18px 18px $text_shadow, 19px 19px $text_shadow, 20px 20px $text_shadow, 21px 21px $text_shadow, 22px 22px $text_shadow, 23px 23px $text_shadow, 24px 24px $text_shadow, 25px 25px $text_shadow, 26px 26px $text_shadow;
+.battle-episode-image-first {
+  @extend %battle-episode-image;
+  transform: perspective(400px) rotateY(10deg);
 }
 
-.battle-episode-voting {
+.battle-episode-image-second {
+  @extend %battle-episode-image;
+  transform: perspective(400px) rotateY(-10deg);
+}
+
+.battle-episode-score {
   text-align: center;
   font-size: 2.5em;
-  color: $light_grey;
+  padding-bottom: 1em;
 }
 
-%battle-episode-vote {
-  background-color: $canyon_orange;
-  color: black;
-  border-radius: 0.4em;
-  padding: 0.2em 0.5em 0.1em;
-  font-size: 0.7em;
-}
-
-.battle-episode-vote-episode-1 {
-  @extend %battle-episode-vote;
-  float: left;
-}
-.battle-episode-vote-episode-2 {
-  @extend %battle-episode-vote;
-  float: right;
-}
-
-.battle-episode-more-info {
+.battle-episode-vote {
   text-align: center;
+  font-size: 2.5em;
+  padding-top: 1em;
 }
