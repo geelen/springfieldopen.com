@@ -11,6 +11,11 @@ app.factory 'Utils', () ->
       angular.forEach nested, (value) ->
         value.data.depth = depth
         array.push value
-        if (value.data.replies!="")
+        if (value.data.replies!="" && value.data.collapsed != true)
           array = array.concat(Utils.flatten(value.data.replies.data.children,depth+1))
       array
+    collapse_all: (comments) ->
+      angular.forEach comments, (value) ->
+        value.data.collapsed = true
+        if (value.data.replies!="")
+          Utils.collapse_all(value.data.replies.data.children)

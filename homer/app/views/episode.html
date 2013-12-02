@@ -11,18 +11,36 @@
 
 <h3>Discussion ({{ comment_data.children.length }}):</h3>
 
-<div ng-repeat="comment in comments()">
-	<div style="padding-left: {{comment.data.depth*25}}px">
-		{{comment.data.author}}: {{comment.data.body}}
+<div ng-repeat="comment in comments()" class="episode-comment-box" style="margin-left: {{10+comment.data.depth*40}}px; background-color: rgba(50,50,255,{{1.5/(comment.data.depth+2)}})">
+	{{ comment.data.ups }} / {{ comment.data.downs }}
+	<span class="voting-button" ng-click="vote_up(comment)" ng-class="{upvoted: comment.data.likes === true}">⬆</span>
+  <span class="voting-button" ng-click="vote_down(comment)" ng-class="{upvoted: comment.data.likes === false}">⬇</span>
+	<div class="episode-comment-author">
+		{{comment.data.author}}:
 	</div>
-	<div style="padding-left: {{(comment.data.depth+1)*25}}px">
+	<div class="episode-comment-body" ng-if="!show_editing(comment)" ng-bind-html="put_links_into_text(comment.data.body)">
+	</div>
+	<div class="episode-comment-body" ng-if="show_editing(comment)">
+		<textarea type="text" ng-model="comment.data.body"></textarea>
+	</div>
+	<button ng-if="show_expand(comment)" ng-click="expand(comment)">Expand</button>
+	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
+	<button ng-if="!show_reply_box(comment)" ng-click="toggle_reply(comment,true)">Add Reply</button>
+	<button ng-if="show_reply_box(comment)" ng-click="toggle_reply(comment,false)">Cancel Reply</button>
+	<button ng-if="my_comment(comment) && !show_editing(comment)" ng-click="toggle_editing(comment,true)">Edit</button>
+	<button ng-if="my_comment(comment) && show_editing(comment)" ng-click="toggle_editing(comment,false)">Save</button>
+	<button ng-if="my_comment(comment)" ng-click="delete_comment(comment)">Delete</button>
+	<div ng-if="show_reply_box(comment)" style="padding-left: 40px">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
-		<button ng-click="add_comment(comment.data)">Reply</button>
+		<div><button ng-click="add_comment(comment.data)">Submit</button></div>
 	</div>
 </div>
-<div>
+<div class="episode-comment-box" style="background-color: rgba(50,50,255,{{1.5/(comment.data.depth+2)}})">
+	<div class="episode-comment-author">
+		{{currentUser.name}}:
+	</div>
 	<div>
 		<textarea type="text" ng-model="comment_data.new_reply"></textarea>
-		<button ng-click="add_comment(comment_data)">Add New Comment</button>
+		<div><button ng-click="add_comment(comment_data)">Add New Comment</button></div>
 	</div>
 </div>
