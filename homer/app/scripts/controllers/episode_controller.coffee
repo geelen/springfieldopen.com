@@ -1,6 +1,6 @@
 app = angular.module 'homerApp'
 
-app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
+app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sce) ->
   $scope.comment_data = 
     children: []
 
@@ -16,6 +16,7 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
     $scope.overview = ep_details[2..-1].join("\n")
     $scope.comment_data = response.data[1].data
     $scope.comment_data.name = $scope.reddit_name
+    Utils.collapse_all($scope.comment_data.children)
     console.log($scope.comments())
 
   $scope.comments = () -> 
@@ -47,11 +48,15 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils) ->
     RedditApi.post("/api/comment", api_type: "json", text: comment_data.new_reply, thing_id: comment_data.name).then (response) ->
       comment_data.new_reply = ""
       comment_data.replying = false
+      comment_data.collapsed = false
       $scope.retrieve_comments()
 
   $scope.retrieve_comments = () ->
     RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (new_comments) ->
       $scope.update_comment_tree($scope.comment_data.children,new_comments.data[1].data.children)
+
+  $scope.put_links_into_text = (text) ->
+    $sce.trustAsHtml(text.replace(/https?:\/\/[^ ]+/g,'<a href="$&">$&</a>'))
 
   $scope.update_comment_tree = (old_comments,new_comments) ->
     old_comments_map = {}
