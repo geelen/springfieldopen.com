@@ -1,17 +1,26 @@
-<h2>EPISODE: {{title}}</h2>
+<strong>You are: {{ currentUser.name }} {{account_str()}}</strong>
 
-<h3>You are: {{ currentUser.name }} {{account_str()}}</h3>
+<div class="episode-overview-box">
+	<h2>{{title}}</h2>
+	<div class="episode-overview" ng-if="!admin_account">{{overview}}</div>
+	<textarea class="episode-overview" ng-model="$parent.overview" ng-if="admin_account">
+	</textarea>
+	<div ng-if="admin_account"><button ng-click="save_changes()">Save</button></div>
+</div>
 
-<div class="ep_overview" ng-if="!admin_account">{{overview}}</div>
-<textarea class="ep_overview" ng-model="$parent.overview" ng-if="admin_account"></textarea>
+<div class="episode-main-image">
+	<img ng-src="{{first_image()}}"/>
+</div>
 
-<img ng-src="{{image_url}}" ng-click="select_image($index)" ng-repeat="image_url in images()"/>
+<div class="episode-other-images" ng-if="admin_account">
+	<img ng-src="{{image_url}}" ng-click="select_image($index)" ng-repeat="image_url in other_images()"/>
+</div>
 
-<div><button ng-click="save_changes()" ng-if="admin_account">Save</button></div>
+<div class="episode-overview-box">
+	<h3>Discussion ({{ comment_data.children.length }}):</h3>
+</div>
 
-<h3>Discussion ({{ comment_data.children.length }}):</h3>
-
-<div ng-repeat="comment in comments()" class="episode-comment-box" style="margin-left: {{10+comment.data.depth*40}}px; background-color: rgba(50,50,255,{{1.5/(comment.data.depth+2)}})">
+<div ng-repeat="comment in comments()" class="episode-comment-box" style="margin-left: {{40*(1-1/(0.25*comment.data.depth+1))}}%; background-color: rgba(50,50,255,{{0.5/(0.5*comment.data.depth+1)}})">
 	{{ comment.data.ups }} / {{ comment.data.downs }}
 	<span class="voting-button" ng-click="vote_up(comment)" ng-class="{upvoted: comment.data.likes === true}">⬆</span>
   <span class="voting-button" ng-click="vote_down(comment)" ng-class="{upvoted: comment.data.likes === false}">⬇</span>
@@ -23,19 +32,19 @@
 	<div class="episode-comment-body" ng-if="show_editing(comment)">
 		<textarea type="text" ng-model="comment.data.body"></textarea>
 	</div>
-	<button ng-if="show_expand(comment)" ng-click="expand(comment)">Expand</button>
-	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">Collapse</button>
+	<button ng-if="show_expand(comment)" ng-click="expand(comment)">+</button>
+	<button ng-if="show_collapse(comment)" ng-click="collapse(comment)">-</button>
 	<button ng-if="!show_reply_box(comment)" ng-click="toggle_reply(comment,true)">Add Reply</button>
 	<button ng-if="show_reply_box(comment)" ng-click="toggle_reply(comment,false)">Cancel Reply</button>
 	<button ng-if="my_comment(comment) && !show_editing(comment)" ng-click="toggle_editing(comment,true)">Edit</button>
 	<button ng-if="my_comment(comment) && show_editing(comment)" ng-click="toggle_editing(comment,false)">Save</button>
 	<button ng-if="my_comment(comment)" ng-click="delete_comment(comment)">Delete</button>
-	<div ng-if="show_reply_box(comment)" style="padding-left: 40px">
+	<div ng-if="show_reply_box(comment)">
 		<textarea type="text" ng-model="comment.data.new_reply"></textarea>
 		<div><button ng-click="add_comment(comment.data)">Submit</button></div>
 	</div>
 </div>
-<div class="episode-comment-box" style="background-color: rgba(50,50,255,{{1.5/(comment.data.depth+2)}})">
+<div class="episode-comment-box" style="background-color: rgba(50,50,255,0.5)">
 	<div class="episode-comment-author">
 		{{currentUser.name}}:
 	</div>

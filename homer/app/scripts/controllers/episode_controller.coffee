@@ -25,13 +25,17 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
   $scope.account_str = () ->
     if $scope.admin_account then " (Admin)" else ""
 
-  $scope.images = () ->
+  $scope.first_image = () ->
+    if !$scope.all_images
+      ""
+    else
+      $scope.all_images[0]
+
+  $scope.other_images = () ->
     if !$scope.all_images
       []
-    else if $scope.admin_account
-      $scope.all_images
     else
-      $scope.all_images[0..0]
+      $scope.all_images[1..$scope.all_images.length-1]
   
   $scope.select_image = (ind) ->
     if ind < $scope.all_images.length
@@ -56,7 +60,9 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
       $scope.update_comment_tree($scope.comment_data.children,new_comments.data[1].data.children)
 
   $scope.put_links_into_text = (text) ->
-    $sce.trustAsHtml(text.replace(/https?:\/\/[^ ]+/g,'<a href="$&">$&</a>'))
+    # html = text.replace(/https?:\/\/[^ ]+/g,'<a href="$&">$&</a>')
+    html = text.replace(/https?:\/\/[^ ]+/g,'<div><img src="$&"></img></div>')
+    $sce.trustAsHtml(html)
 
   $scope.update_comment_tree = (old_comments,new_comments) ->
     old_comments_map = {}

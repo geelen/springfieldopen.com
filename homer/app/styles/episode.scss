@@ -1,6 +1,43 @@
-.episode-comment-box {
-	margin: 10px;
+.episode-main-image {
+	background-color: rgba(50,50,255,0.5);
+	margin: 10px 0px;
 	padding: 10px;
+
+	img {
+		margin: 10px;
+		height: 400px;
+	}	
+}
+
+.episode-other-images {
+	background-color: rgba(50,50,255,0.5);
+	margin: 10px 0px;
+	padding: 10px;
+
+	img {
+		margin: 10px;
+		height: 150px;
+	}	
+}
+
+.episode-overview-box {
+	background-color: rgba(50,50,255,0.5);
+	margin: 10px 0px;
+	padding: 10px;
+}
+
+.episode-overview {
+	height: 150px;
+	width: 400px;
+}
+
+.episode-comment-box {
+	margin: 10px 0px;
+	padding: 10px;
+
+	img {
+		max-width: 100%;
+	}
 }
 
 .episode-comment-body {
