@@ -27,6 +27,31 @@ class RedditPoster
 	  HTTParty.post('https://oauth.reddit.com/api/submit.json', options)
 	end
 
+	def delete thingname
+		body_hash = {
+      id: thingname
+    }
+		options = {
+	    headers: @headers,
+	    body: hash_to_body(body_hash)
+	  }
+	  HTTParty.post('https://oauth.reddit.com/api/del', options)
+	end
+
+	def clear_subreddit subreddit
+		url = "http://www.reddit.com/r/#{subreddit}.json"
+		response = HTTParty.get(url)
+		puts JSON.pretty_generate(response)
+		while response['data']['children'].length > 0
+			response['data']['children'].each { |post|
+				response = delete(post['data']['name'])
+				puts JSON.pretty_generate(response)
+			}
+			response = HTTParty.get(url)
+			puts JSON.pretty_generate(response)
+		end
+	end
+
 	def replace_text thingname, text
 		body_hash = {
       api_type: 'json',

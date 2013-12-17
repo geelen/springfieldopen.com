@@ -22,12 +22,12 @@ end
 reddit_hash = EpisodeLoader.reddit_hash
 episode_list = EpisodeLoader.local_imdb_list
 ranked_reddit_ids = episode_list.map { |episode| [episode,reddit_hash[episode]] }
-bracket = partition_seeds(ranked_reddit_ids[0...16])
+bracket = partition_seeds(ranked_reddit_ids[0...32])
 episode_lineups = episode_battles(bracket, [0])
 
 File.open(File.dirname(__FILE__) + "/data/bracket.json", 'w') { |file|
 	file << bracket.to_json
 }
-File.open(File.dirname(__FILE__) + "/data/episode_lineups0.json", 'w') { |file|
+File.open(File.dirname(__FILE__) + "/data/episode_lineups.json", 'w') { |file|
 	file << episode_lineups.to_json
 }

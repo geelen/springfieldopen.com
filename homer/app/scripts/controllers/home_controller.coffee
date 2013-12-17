@@ -6,7 +6,9 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
-    round_post = response.data.data.children[0].data.id
+    rounds = response.data.data.children
+    open_round = (rounds.filter (c) -> c.data.selftext == "open")[0]
+    round_post = open_round.data.id
     RedditApi.get("/comments/#{round_post}.json").then (response) ->
       $scope.battles = response.data[1].data.children.map (c) -> 
         $scope.load_battle(c.data.replies.data.children)
