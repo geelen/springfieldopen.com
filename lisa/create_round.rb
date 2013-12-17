@@ -14,17 +14,20 @@ round = 0
 refresh_token = ENV["REDDIT_REFRESH_TOKEN"]
 poster = RedditPoster.new(refresh_token,subreddit)
 episodes = JSON.parse(File.read("data/episode_lineups#{round}.json"))
+response = poster.post("Round #{round+1} Matches","")
+puts JSON.pretty_generate(response)
+round_post_name = response['json']['data']['name']
 
 get_battles(episodes).each_with_index do |battle,i|
-	text = "#{round+1}\n#{i+1}\n"
-	text += "#{battle[0][0]}\n#{battle[0][1]}\n"
-	text += "#{battle[1][0]}\n#{battle[1][1]}"
-	response = poster.post("Battle #{round+1}-#{i+1}",text)
+	text = "Battle #{i+1}"
+	response = poster.comment(round_post_name,text)
 	puts JSON.pretty_generate(response)
-	post_name = response['json']['data']['name']
-	response = poster.comment(post_name,battle[0][0] + "\n" + battle[0][1])
+	battle_comment_name = response['json']['data']['things'][0]['data']['name']
+	battle1 = battle[0].flatten
+	response = poster.comment(battle_comment_name,battle1[1] + "\n" + battle1[2] + "\n" + battle1[0])
 	puts JSON.pretty_generate(response)
-	response = poster.comment(post_name,battle[1][0] + "\n" + battle[1][1])
+	battle2 = battle[1].flatten
+	response = poster.comment(battle_comment_name,battle2[1] + "\n" + battle2[2] + "\n" + battle2[0])
 	puts JSON.pretty_generate(response)
 end
 

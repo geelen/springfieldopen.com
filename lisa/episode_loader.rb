@@ -14,7 +14,7 @@ class EpisodeLoader
 			last_id = (new_episode_details.empty?) ? nil : new_episode_details[-1]['name']
 			full_episode_details += new_episode_details
 		end
-		Hash[full_episode_details.map { |ep| [ep['title'].gsub("&amp;","&"), ep['name']] }]
+		Hash[full_episode_details.map { |ep| [ep['title'].gsub("&amp;","&"), [ep['name'], ep['selftext'].split(" ").first]] }]
 	end
 
 	def self.local_imdb_list
