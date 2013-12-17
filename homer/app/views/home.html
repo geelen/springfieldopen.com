@@ -6,26 +6,21 @@
 <div><a href="#/test_battle">First go at a mobile layout for a battle page</a></div>
 
 <h3>Battles:</h3>
-<!-- <ul>
-  <li ng-repeat="item in battles | orderBy:'title'">
-    <a href="#/battle/{{short_name(item.name)}}">{{ item.description }}</a>
-  </li>
-</ul> -->
+
 <table style="table-layout: fixed">
 	<tr ng-repeat="item in battles | orderBy:'title'">
-    <td class="battle_cell"><a href="#/battle/{{short_name(item.name)}}">{{ item.title }}</a></td>
-    <td class="episode_cell" style="text-align: right">({{item.ep1_num}}) <a href="#/episode/{{short_name(item.ep1_name)}}">{{item.ep1_title}}</a></td>
-    <td class="score_cell">{{item.ep1_score}}</td>
+    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep1.ep_name)}}"><img src="{{item.ep1.ep_image_url}}"></img></a></td>
+    <td class="score_cell">
+      <div>{{score(item.ep1)}}</div>
+      <div class="battle-voting-button" ng-click="votefor(item.ep1)" ng-class="{upvoted: item.ep1.likes === true}">VOTE</div>
+    </td>
     <td class="vs_cell">vs</td>
-		<td class="score_cell">{{item.ep2_score}}</td>
-    <td class="episode_cell" style="text-align: left"><a href="#/episode/{{short_name(item.ep2_name)}}">{{item.ep2_title}}</a> ({{item.ep2_num}})</td>
+		<td class="score_cell">
+      <div>{{score(item.ep2)}}</div>
+      <div class="battle-voting-button" ng-click="votefor(item.ep2)" ng-class="{upvoted: item.ep2.likes === true}">VOTE</div>
+    </td>
+    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep2.ep_name)}}"><img src="{{item.ep2.ep_image_url}}"></img></a></td>
   </tr>
 </table>
 
-<!-- <h3>Episodes:</h3>
-<ul>
-  <li ng-repeat="item in episodes | orderBy:'title'">
-    <a href="#/episode/{{short_name(item.name)}}">{{ item.title }}</a>
-  </li>
-</ul> -->
 

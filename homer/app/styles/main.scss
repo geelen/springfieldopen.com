@@ -174,7 +174,7 @@ body {
 }
 
 .voting-button {
-  color: lightgrey;
+  color: lightgray;
   &.upvoted { color: orange; }
   &.downvoted { color: blue; }
   &.nothing { color: black; }
@@ -186,18 +186,15 @@ body {
 	min-height: 100px;
 }
 
-.battle_cell {
-	width: 150px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-}
-
 .episode_cell {
-	width: 250px;
+	width: 350px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+
+	img {
+		height: 200px;
+	}
 }
 
 .vs_cell {
@@ -208,4 +205,14 @@ body {
 .score_cell {
 	width: 100px;
 	text-align: center;
+
+	div {
+		height: 50px;
+		text-align: center;
+	}
+}
+
+.battle-voting-button {
+  color: black;
+  &.upvoted { color: orange; }
 }

@@ -6,55 +6,62 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
-    $scope.battles = response.data.data.children.map (c) -> 
-      $scope.load_battle(c.data)
-    
-  $scope.load_battle = (battle) ->
-    RedditApi.get("/comments/#{$scope.short_name(battle.name)}.json?limit=2&sort=old").then (response) ->
-      battle_eps = $filter('limitTo') (response.data[1].data.children.map (c) -> c.data), 2
-      battle.ep1_score = $filter('positive') (battle_eps[0].ups - battle_eps[0].downs)
-      battle.ep2_score = $filter('positive') (battle_eps[1].ups - battle_eps[1].downs)
-    battle_details = battle.selftext.split("\n")
-    battle.round = battle_details[0]
-    battle.number = battle_details[1]
-    split_title = battle_details[2].split(" ")
-    battle.ep1_title = split_title[1..split_title.length-1].join(" ")
-    battle.ep1_num = split_title[0]
-    battle.ep1_name = battle_details[3]
-    split_title = battle_details[4].split(" ")
-    battle.ep2_title = split_title[1..split_title.length-1].join(" ")
-    battle.ep2_num = split_title[0]
-    battle.ep2_name = battle_details[5]
-    battle.description = "\"#{battle.ep1_title}\" VS \"#{battle.ep2_title}\""
-    # console.log(battle)
+    round_post = response.data.data.children[0].data.id
+    RedditApi.get("/comments/#{round_post}.json").then (response) ->
+      $scope.battles = response.data[1].data.children.map (c) -> 
+        $scope.load_battle(c.data.replies.data.children)
+      console.log($scope.battles)
+
+  $scope.load_battle = (comments) ->
+    battle = {}
+    battle.ep1 = $scope.load_battle_episode(comments[0].data)
+    battle.ep2 = $scope.load_battle_episode(comments[1].data)
+    battle.ep1.other_item = battle.ep2
+    battle.ep2.other_item = battle.ep1
     battle
 
-  $scope.get_episodes_after = (name) ->
-    RedditApi.get("/r/SpringfieldOpenEps.json?limit=100&after=#{name}").then (response) ->
-      $scope.get_episodes_after_helper(response)
-
-  $scope.get_episodes_after_helper = (response) ->
-    eps = response.data.data.children.map (c) -> c.data
-    $scope.episodes = $scope.episodes.concat(eps)
-    # console.log($scope.episodes.length)
-    if eps.length > 0
-      $scope.get_episodes_after(eps[eps.length-1].name)
-
-  $scope.get_episodes = () ->
-    RedditApi.get("/r/SpringfieldOpenEps.json?limit=100").then (response) ->
-      $scope.get_episodes_after_helper(response)
-      
-  $scope.episodes = []
-  # $scope.get_episodes()
+  $scope.load_battle_episode = (comment) ->
+    battle_ep = comment
+    ep_details = comment.body.split("\n")
+    battle_ep.ep_name = ep_details[0]
+    battle_ep.ep_image_url = ep_details[1]
+    title_pieces = ep_details[2].split(" ")
+    battle_ep.ep_num = title_pieces[0]
+    battle_ep.ep_title = title_pieces[1..title_pieces.length-1].join(" ")
+    battle_ep
   
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
 
-  # vote = (direction) -> (item) ->
-  #   item.likes = if direction > 0 then true else if direction < 0 then false else null
-  #   RedditApi.post("/api/vote", dir: direction, id: item.name)
-  #   .then -> console.log("Voted on #{item.name} in direction #{direction}")
+  $scope.score = (item) ->
+    $filter('positive') (item.ups - item.downs)
 
-  # $scope.upvote = vote(1)
-  # $scope.downvote = vote(-1)
-  # $scope.cancel = vote(0)
+  vote = (item,direction) ->
+    if direction > 0
+      if item.likes == false
+        item.ups += 1
+        item.downs -= 1
+      else if item.likes == null
+        item.ups += 1
+      item.likes = true
+    else if direction < 0
+      if item.likes == true
+        item.ups -= 1
+        item.downs += 1
+      else if item.likes == null
+        item.downs += 1
+      item.likes = false
+    else
+      if item.likes == true
+        item.ups -= 1
+      else if item.likes == false
+        item.downs -= 1
+      item.likes = null
+    RedditApi.post("/api/vote", dir: direction, id: item.name)
+
+  $scope.votefor = (item) -> 
+    if (item.likes == true)
+      vote(item,0)
+    else
+      vote(item,1)
+      vote(item.other_item,0)
