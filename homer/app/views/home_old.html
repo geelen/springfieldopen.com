@@ -1,0 +1,26 @@
+<h2>OMG WE'RE IN</h2>
+
+<h3>You are: {{ currentUser.name }}</h3>
+
+<div><a href="#/battle/1mmyml">Test Battle (connected to reddit)</a></div>
+<div><a href="#/test_battle">First go at a mobile layout for a battle page</a></div>
+
+<h3>Battles:</h3>
+
+<table style="table-layout: fixed">
+	<tr ng-repeat="item in battles | orderBy:'title'">
+    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep1.ep_name)}}"><img src="{{item.ep1.ep_image_url}}"></img></a></td>
+    <td class="score_cell">
+      <div>{{score(item.ep1)}}</div>
+      <div class="battle-voting-button" ng-click="votefor(item.ep1)" ng-class="{upvoted: item.ep1.likes === true}">VOTE</div>
+    </td>
+    <td class="vs_cell">vs</td>
+		<td class="score_cell">
+      <div>{{score(item.ep2)}}</div>
+      <div class="battle-voting-button" ng-click="votefor(item.ep2)" ng-class="{upvoted: item.ep2.likes === true}">VOTE</div>
+    </td>
+    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep2.ep_name)}}"><img src="{{item.ep2.ep_image_url}}"></img></a></td>
+  </tr>
+</table>
+
+

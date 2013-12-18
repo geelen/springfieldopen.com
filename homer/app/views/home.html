@@ -1,26 +1,66 @@
-<h2>OMG WE'RE IN</h2>
+<header class="site-header">
+  springfieldopen.com
 
-<h3>You are: {{ currentUser.name }}</h3>
+  &copy; 2014
+</header>
 
-<div><a href="#/battle/1mmyml">Test Battle (connected to reddit)</a></div>
-<div><a href="#/test_battle">First go at a mobile layout for a battle page</a></div>
+<section class="main-banner">
+  <div class="main-banner-headline">
+    <h1>The Springfield Open</h1>
+    <img class="main-banner-donut" src="/images/golden_donut.png" alt="The Golden Donut"/>
+    <div class="main-banner-background"></div>
+  </div>
+  <div class="main-banner-tagline">
+    <h2>A <strong>competition</strong> for the best Simpsons episode of all time.</h2>
+    <h2>Powered by
+      <img class="main-banner-tagline-reddit-logo" src="/images/Reddit_logo.svg" alt="Reddit"/>
+    </h2>
+    <h2>Voted by <strong>you</strong></h2>
+  </div>
+</section>
 
-<h3>Battles:</h3>
+<section class="battle-list">
 
-<table style="table-layout: fixed">
-	<tr ng-repeat="item in battles | orderBy:'title'">
-    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep1.ep_name)}}"><img src="{{item.ep1.ep_image_url}}"></img></a></td>
-    <td class="score_cell">
-      <div>{{score(item.ep1)}}</div>
-      <div class="battle-voting-button" ng-click="votefor(item.ep1)" ng-class="{upvoted: item.ep1.likes === true}">VOTE</div>
-    </td>
-    <td class="vs_cell">vs</td>
-		<td class="score_cell">
-      <div>{{score(item.ep2)}}</div>
-      <div class="battle-voting-button" ng-click="votefor(item.ep2)" ng-class="{upvoted: item.ep2.likes === true}">VOTE</div>
-    </td>
-    <td class="episode_cell"><a href="#/episode/{{short_name(item.ep2.ep_name)}}"><img src="{{item.ep2.ep_image_url}}"></img></a></td>
-  </tr>
-</table>
+  <header class="battle-list-header">
+    <h1>Matches in progress:</h1>
+  </header>
 
+  <div class="battle is-open" ng-repeat="item in battles">
+    <div class="battle-container">
+      <div class="battle-episode-first-info">
+        <
+      </div>
+      <div class="battle-center-column">
+        <div class="battle-episode-first">
+          <div class="battle-episode-score">
+            {{score(item.ep1)}}
+          </div>
+          <a href="#/episode/{{short_name(item.ep1.ep_name)}}">
+            <div class="battle-episode-image-first"
+               style="background-image: url({{item.ep1.ep_image_url}})">
+          </div>
+          </a>
+          <div class="battle-episode-vote" ng-click="votefor(item.ep1)" ng-class="{upvoted: item.ep1.likes === true}">
+            Vote
+          </div>
+        </div><div class="battle-episode-second">
+          <div class="battle-episode-score">
+            {{score(item.ep2)}}
+          </div>
+          <a href="#/episode/{{short_name(item.ep2.ep_name)}}">
+            <div class="battle-episode-image-second"
+                 style="background-image: url({{item.ep2.ep_image_url}})">
+            </div>
+          </a>
+          <div class="battle-episode-vote" ng-click="votefor(item.ep2)" ng-class="{upvoted: item.ep2.likes === true}">
+            Vote
+          </div>
+        </div>
+      </div>
+      <div class="battle-episode-second-info">
+        >
+      </div>
+    </div>
+  </div>
 
+</section>
