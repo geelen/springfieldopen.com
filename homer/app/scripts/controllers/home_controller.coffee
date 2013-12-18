@@ -1,11 +1,14 @@
 app = angular.module 'homerApp'
 
+app.controller "DummyHomeController", ($scope) ->
+
 app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
 
   RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
+<<<<<<< HEAD
     rounds = response.data.data.children
     open_round = (rounds.filter (c) -> c.data.selftext == "open")[0]
     round_post = open_round.data.id

@@ -1,0 +1,93 @@
+.battle {
+  position: relative;
+  overflow: hidden;
+  border-top: 0.5em solid $court_green;
+  padding: 2em 0em 3em;
+  text-align: center;
+
+  &:first-of-type::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    margin-left: -0.25em;
+    width: 0.5em;
+    height: 1em;
+    background-color: $court_green;
+    top: 0;
+  }
+}
+
+.battle-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 1000px;
+}
+
+%battle-episode-info {
+  position: absolute;
+  top: 50%;
+  font-size: 2.5em;
+  margin-top: -1em;
+}
+
+.battle-episode-first-info {
+  @extend %battle-episode-info;
+  left: 0.5em;
+
+}
+
+.battle-episode-second-info {
+  @extend %battle-episode-info;
+  right: 0.5em;
+}
+
+.battle-center-column {
+  margin: 0em 5em 0em;
+}
+
+%battle-episode {
+  display: inline-block;
+  width: 50%;
+}
+
+.battle-episode-first {
+  @extend %battle-episode;
+  text-align: right;
+}
+
+.battle-episode-second {
+  @extend %battle-episode;
+  text-align: left;
+}
+
+%battle-episode-image {
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  border: 1px solid #666;
+}
+
+.battle-episode-image-first {
+  @extend %battle-episode-image;
+  transform: perspective(400px) rotateY(10deg);
+}
+
+.battle-episode-image-second {
+  @extend %battle-episode-image;
+  transform: perspective(400px) rotateY(-10deg);
+}
+
+.battle-episode-score {
+  text-align: center;
+  font-size: 2.5em;
+  padding-bottom: 1em;
+}
+
+.battle-episode-vote {
+  text-align: center;
+  font-size: 2.5em;
+  padding-top: 1em;
+}
