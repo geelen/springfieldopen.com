@@ -39,9 +39,10 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
   
   $scope.select_image = (ind) ->
     if ind < $scope.all_images.length
-      selected_image = $scope.all_images[ind]
-      $scope.all_images[ind] = $scope.all_images[0]
+      selected_image = $scope.all_images[ind+1]
+      $scope.all_images[ind+1] = $scope.all_images[0]
       $scope.all_images[0] = selected_image
+      $scope.save_changes()
 
   $scope.save_changes = () ->
     image_str = $scope.all_images.join(" ")
