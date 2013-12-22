@@ -3,6 +3,9 @@ app = angular.module 'homerApp'
 app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sce) ->
   $scope.comment_data = 
     children: []
+  $scope.ep_details = 
+    synopsis: "",
+    images: []
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
@@ -11,13 +14,10 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
     $scope.title = response.data[0].data.children[0].data.title
     $scope.reddit_name = response.data[0].data.children[0].data.name
-    ep_details = response.data[0].data.children[0].data.selftext.split("\n")
-    $scope.all_images = ep_details[0].split(" ")
-    $scope.overview = ep_details[2..-1].join("\n")
+    $scope.ep_details = jsyaml.safeLoad(response.data[0].data.children[0].data.selftext)
     $scope.comment_data = response.data[1].data
     $scope.comment_data.name = $scope.reddit_name
     Utils.collapse_all($scope.comment_data.children)
-    console.log($scope.comments())
 
   $scope.comments = () -> 
     Utils.flatten($scope.comment_data.children)
@@ -26,28 +26,27 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
     if $scope.admin_account then " (Admin)" else ""
 
   $scope.first_image = () ->
-    if !$scope.all_images
+    if !$scope.ep_details.images
       ""
     else
-      $scope.all_images[0]
+      $scope.ep_details.images[0]
 
   $scope.other_images = () ->
-    if !$scope.all_images
+    if !$scope.ep_details.images
       []
     else
-      $scope.all_images[1..$scope.all_images.length-1]
+      $scope.ep_details.images[1..$scope.ep_details.images.length-1]
   
   $scope.select_image = (ind) ->
-    if ind < $scope.all_images.length
-      selected_image = $scope.all_images[ind+1]
-      $scope.all_images[ind+1] = $scope.all_images[0]
-      $scope.all_images[0] = selected_image
+    if ind < $scope.ep_details.images.length
+      selected_image = $scope.ep_details.images[ind+1]
+      $scope.ep_details.images[ind+1] = $scope.ep_details.images[0]
+      $scope.ep_details.images[0] = selected_image
       $scope.save_changes()
 
   $scope.save_changes = () ->
-    image_str = $scope.all_images.join(" ")
-    ep_details = image_str + "\ngood\n" + $scope.overview
-    RedditApi.post("/api/editusertext", api_type: "json", text: ep_details, thing_id: $scope.reddit_name)
+    yaml = jsyaml.safeDump($scope.ep_details)
+    RedditApi.post("/api/editusertext", api_type: "json", text: yaml, thing_id: $scope.reddit_name)
 
   $scope.add_comment = (comment_data) ->
     RedditApi.post("/api/comment", api_type: "json", text: comment_data.new_reply, thing_id: comment_data.name).then (response) ->

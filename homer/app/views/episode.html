@@ -2,8 +2,8 @@
 
 <div class="episode-overview-box">
 	<h2>{{title}}</h2>
-	<div class="episode-overview" ng-if="!admin_account">{{overview}}</div>
-	<textarea class="episode-overview" ng-model="$parent.overview" ng-if="admin_account">
+	<div class="episode-overview" ng-if="!admin_account">{{ep_details.synopsis}}</div>
+	<textarea class="episode-overview" ng-model="$parent.ep_details.synopsis" ng-if="admin_account">
 	</textarea>
 	<div ng-if="admin_account"><button ng-click="save_changes()">Save</button></div>
 </div>

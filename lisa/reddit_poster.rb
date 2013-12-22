@@ -11,6 +11,17 @@ class RedditPoster
 	  @subreddit = subreddit
 	end
 
+	def get_user
+		body_hash = {
+      api_type: 'json'
+    }
+		options = {
+	    headers: @headers,
+	    body: hash_to_body(body_hash)
+	  }
+	  HTTParty.get('https://oauth.reddit.com/api/v1/me.json', options)
+	end
+
 	def post title, text
 		body_hash = {
       api_type: 'json',
