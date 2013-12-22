@@ -32,15 +32,31 @@ round1_post_name = ""
 
 # Add battles to round 1
 get_battles(episodes).each_with_index do |battle,i|
-	text = "Battle #{i+1}"
-	response = poster.comment(round1_post_name,text)
+	# Create battle comment
+	response = poster.comment(round1_post_name,"Battle #{i+1}")
 	puts JSON.pretty_generate(response)
 	battle_comment_name = response['json']['data']['things'][0]['data']['name']
+	# Create ep1 comment for battle
 	battle1 = battle[0].flatten
 	response = poster.comment(battle_comment_name,battle1[1] + "\n" + battle1[2] + "\n" + battle1[0])
+	battle1_id = response['json']['data']['things'][0]['data']['id']
 	puts JSON.pretty_generate(response)
+	# Create ep1 comment for battle
 	battle2 = battle[1].flatten
 	response = poster.comment(battle_comment_name,battle2[1] + "\n" + battle2[2] + "\n" + battle2[0])
+	battle2_id = response['json']['data']['things'][0]['data']['id']
+	puts JSON.pretty_generate(response)
+	# Update ep1 selftext
+	response = HTTParty.get("http://www.reddit.com/r/SpringfieldOpenEps/comments/#{battle1[1].split("_")[1]}.json")
+	ep_details = YAML.load(response[0]['data']['children'][0]['data']['selftext'])
+	ep_details['battles'] = [battle1_id]
+	response = poster.replace_text(battle1[1],ep_details.to_yaml)
+	puts JSON.pretty_generate(response)
+	# Update ep2 selftext
+	response = HTTParty.get("http://www.reddit.com/r/SpringfieldOpenEps/comments/#{battle2[1].split("_")[1]}.json")
+	ep_details = YAML.load(response[0]['data']['children'][0]['data']['selftext'])
+	ep_details['battles'] = [battle2_id]
+	response = poster.replace_text(battle2[1],ep_details.to_yaml)
 	puts JSON.pretty_generate(response)
 end
 

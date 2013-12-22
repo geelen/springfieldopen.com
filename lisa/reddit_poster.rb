@@ -56,7 +56,6 @@ class RedditPoster
 		while response['data']['children'].length > 0
 			response['data']['children'].each { |post|
 				response = delete(post['data']['name'])
-				puts JSON.pretty_generate(response)
 			}
 			response = HTTParty.get(url)
 			puts JSON.pretty_generate(response)

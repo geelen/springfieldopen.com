@@ -1,4 +1,5 @@
 Bundler.require
+require 'yaml'
 
 class EpisodeLoader
 
@@ -14,7 +15,10 @@ class EpisodeLoader
 			last_id = (new_episode_details.empty?) ? nil : new_episode_details[-1]['name']
 			full_episode_details += new_episode_details
 		end
-		Hash[full_episode_details.map { |ep| [ep['title'].gsub("&amp;","&"), [ep['name'], ep['selftext'].split(" ").first]] }]
+		Hash[full_episode_details.map { |ep| 
+			image_url = YAML.load(ep['selftext'])['images'].first
+			[ep['title'].gsub("&amp;","&"), [ep['name'], image_url]] 
+		}]
 	end
 
 	def self.local_imdb_list

@@ -16,19 +16,12 @@ details_hash = episode_details.group_by { |ep|
 	"#{ep['season']}.#{ep['episode']}" 
 }
 
+# ["12.18 Trilogy of Error"].each do |title|
 episodes.keys.each do |title|
 	ep_id = title.split(" ")[0]
 	if details_hash.has_key?(ep_id)
 		details = details_hash[ep_id][0]
-		# text = details['images'].join(" ")
-		# text += "\n" + (details['synopsis_needs_attention'] ? "review" : "good")
-		# text += "\n" + details['synopsis']
-	  # response = poster.replace_text(episodes[title],text)
-	  # p response
-	  # puts JSON.pretty_generate(response)
-
-	  # response = HTTParty.get("http://www.reddit.com/api/info.json?id=#{episodes[title][0]}")
-	  # p response
+		# p details.to_yaml
 		response = poster.replace_text(episodes[title][0],details.to_yaml)
 		p response
 	  # puts JSON.pretty_generate(response)
