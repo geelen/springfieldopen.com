@@ -37,7 +37,7 @@
           </div>
           <a href="#/episode/{{short_name(item.ep1.ep_name)}}">
             <div class="battle-episode-image-first"
-               style="background-image: url({{item.ep1.ep_image_url}})">
+               style="background-image: url({{escape_image_url(item.ep1.ep_image_url)}})">
           </div>
           </a>
           <div class="battle-episode-vote" ng-click="votefor(item.ep1)" ng-class="{upvoted: item.ep1.likes === true}">
@@ -49,7 +49,7 @@
           </div>
           <a href="#/episode/{{short_name(item.ep2.ep_name)}}">
             <div class="battle-episode-image-second"
-                 style="background-image: url({{item.ep2.ep_image_url}})">
+                 style="background-image: url({{escape_image_url(item.ep2.ep_image_url)}})">
             </div>
           </a>
           <div class="battle-episode-vote" ng-click="votefor(item.ep2)" ng-class="{upvoted: item.ep2.likes === true}">

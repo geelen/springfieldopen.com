@@ -12,6 +12,7 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
     open_round = (rounds.filter (c) -> c.data.selftext == "open")[0]
     round_post = open_round.data.id
     RedditApi.get("/comments/#{round_post}.json").then (response) ->
+      console.log(response)
       $scope.battles = response.data[1].data.children.map (c) -> 
         $scope.load_battle(c.data.replies.data.children)
 
@@ -68,3 +69,7 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
     else
       vote(item,1)
       vote(item.other_item,0)
+
+  $scope.escape_image_url = (url) ->
+    url.replace("'","\\'")
+

@@ -43,6 +43,9 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
       $scope.ep_details.images[ind+1] = $scope.ep_details.images[0]
       $scope.ep_details.images[0] = selected_image
       $scope.save_changes()
+      angular.forEach $scope.ep_details.battles, (value) ->
+        new_text = $scope.reddit_name + "\n" + selected_image + "\n" + $scope.title
+        RedditApi.post("/api/editusertext", api_type: "json", text: new_text, thing_id: "t1_" + value)
 
   $scope.save_changes = () ->
     yaml = jsyaml.safeDump($scope.ep_details)
