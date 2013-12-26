@@ -2,40 +2,13 @@ app = angular.module 'homerApp'
 
 app.controller "DummyHomeController", ($scope) ->
 
-app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
+app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager) ->
 
-  RedditApi.get("/api/v1/me.json").then (response) ->
-    $scope.currentUser = response.data
-
-  RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
-    rounds = response.data.data.children
-    open_round = (rounds.filter (c) -> c.data.selftext == "open")[0]
-    round_post = open_round.data.id
-    RedditApi.get("/comments/#{round_post}.json").then (response) ->
-      console.log(response)
-      $scope.battles = response.data[1].data.children.map (c) -> 
-        $scope.load_battle(c.data.replies.data.children)
-
-  $scope.load_battle = (comments) ->
-    battle = {}
-    battle.ep1 = $scope.load_battle_episode(comments[0].data)
-    battle.ep2 = $scope.load_battle_episode(comments[1].data)
-    battle.ep1.other_item = battle.ep2
-    battle.ep2.other_item = battle.ep1
-    battle
-
-  $scope.load_battle_episode = (comment) ->
-    battle_ep = comment
-    ep_details = comment.body.split("\n")
-    battle_ep.ep_name = ep_details[0]
-    battle_ep.ep_image_url = ep_details[1]
-    title_pieces = ep_details[2].split(" ")
-    battle_ep.ep_num = title_pieces[0]
-    battle_ep.ep_title = title_pieces[1..title_pieces.length-1].join(" ")
-    battle_ep
-  
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
+
+  $scope.escape_image_url = (url) ->
+    url.replace("'","\\'")
 
   $scope.score = (item) ->
     $filter('positive') (item.ups - item.downs)
@@ -70,6 +43,9 @@ app.controller "HomeController", ($scope, $filter, RedditApi, RandomPath) ->
       vote(item,1)
       vote(item.other_item,0)
 
-  $scope.escape_image_url = (url) ->
-    url.replace("'","\\'")
+  RedditApi.get("/api/v1/me.json").then (response) ->
+    $scope.currentUser = response.data
+
+  $scope.tournament = TournamentManager
+  $scope.tournament.update_battles() # do this every 10 seconds or something?
 

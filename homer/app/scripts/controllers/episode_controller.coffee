@@ -1,11 +1,39 @@
 app = angular.module 'homerApp'
 
-app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sce) ->
+app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sce, TournamentManager) ->
   $scope.comment_data = 
     children: []
   $scope.ep_details = 
     synopsis: "",
     images: []
+
+  number_of_upcoming_battles = 1
+  number_of_episodes = Math.pow(2,number_of_upcoming_battles+1)
+
+  nearby_episodes_map = {}
+  nearby_episodes = []
+  angular.forEach TournamentManager.battles, (battle) ->
+    nearby_episodes.push(battle.ep1)
+    nearby_episodes.push(battle.ep2)
+    if nearby_episodes.length == number_of_episodes
+      angular.forEach nearby_episodes, (episode,i) ->
+        ep_list = []
+        binary = (i).toString(2)
+        while (number_of_upcoming_battles+1) > binary.length
+          binary = ("0").concat(binary)
+        tree = binary.split("").map (e) -> (e=="1")
+        cnt = 0
+        angular.forEach tree, (half,j) ->
+          n = Math.pow(2,tree.length-j-1)
+          k = cnt + (if half then 0 else n)
+          ep_list = nearby_episodes.slice(k,k+n).concat(ep_list)
+          cnt += (if half then n else 0)
+        ep_list.unshift(nearby_episodes[i])
+        nearby_episodes_map[episode.ep_name.split("_")[1]] = ep_list
+      nearby_episodes = []
+
+  $scope.upcoming = nearby_episodes_map[$stateParams.episode_id]
+  console.log($scope.upcoming)
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data

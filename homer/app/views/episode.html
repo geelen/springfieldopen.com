@@ -17,6 +17,13 @@
 </div>
 
 <div class="episode-overview-box">
+	<h3>Upcoming Episodes</h3>
+	<div ng-repeat="upcoming_episode in upcoming">
+		{{upcoming_episode.body}}
+	</div>		
+</div>
+
+<div class="episode-overview-box">
 	<h3>Discussion ({{ comment_data.children.length }}):</h3>
 </div>
 
