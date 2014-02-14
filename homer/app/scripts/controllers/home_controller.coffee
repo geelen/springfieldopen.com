@@ -3,6 +3,8 @@ app = angular.module 'homerApp'
 app.controller "DummyHomeController", ($scope) ->
 
 app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager) ->
+  $scope.tournament = TournamentManager
+
 
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
@@ -36,7 +38,7 @@ app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager)
       item.likes = null
     RedditApi.post("/api/vote", dir: direction, id: item.name)
 
-  $scope.votefor = (item) -> 
+  $scope.votefor = (item) ->
     if (item.likes == true)
       vote(item,0)
     else
@@ -45,7 +47,3 @@ app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager)
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data
-
-  $scope.tournament = TournamentManager
-  $scope.tournament.update_battles() # do this every 10 seconds or something?
-
