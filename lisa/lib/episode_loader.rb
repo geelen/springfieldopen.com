@@ -25,9 +25,9 @@ class EpisodeLoader
 		}]
 	end
 
-	def self.local_imdb_list
+	def self.episode_keys_by_imdb_ranking
 		full_hash = JSON.parse(File.read(File.dirname(__FILE__) + "/../data/episodes.json"))
-		full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" }
+		full_hash.map { |ep| "#{ep['season']}.#{ep['episode']}" }
 	end
 
 end

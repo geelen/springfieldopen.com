@@ -1,9 +1,9 @@
 class BracketCreator
 
-  def initialize(config, reddit_hash, episode_list)
+  def initialize(config, reddit_hash, episode_keys_by_imdb_ranking)
     @config = config
     @reddit_hash = reddit_hash
-    @episode_list = episode_list
+    @episode_keys_by_imdb_ranking = episode_keys_by_imdb_ranking
   end
 
   def bracket
@@ -11,7 +11,7 @@ class BracketCreator
   end
 
   def ranked_reddit_ids
-    @ranked_reddit_ids ||= @episode_list.map { |episode| [episode, @reddit_hash[episode]] }
+    @ranked_reddit_ids ||= @episode_keys_by_imdb_ranking.map { |episode| battle_data(@reddit_hash[episode]) }
   end
 
   def episode_lineups
@@ -19,6 +19,10 @@ class BracketCreator
   end
 
   private
+
+  def battle_data(episode)
+    { name: episode['name'], data: JSON.parse(episode['selftext']) }
+  end
 
   def partition_seeds seeds
   	return seeds if seeds.length <= 2

@@ -1,17 +1,17 @@
 Bundler.require
-require File.dirname(__FILE__) + '/../lib/episode_loader'
-require File.dirname(__FILE__) + '/../lib/bracket_creator'
-require File.dirname(__FILE__) + '/../lib/lisa_config'
+require_relative '../lib/episode_loader'
+require_relative '../lib/bracket_creator'
+require_relative '../lib/lisa_config'
 
 config = LisaConfig.from_argv(ARGV)
 reddit_hash = EpisodeLoader.reddit_hash
-episode_list = EpisodeLoader.local_imdb_list
+episode_keys_by_imdb_ranking = EpisodeLoader.episode_keys_by_imdb_ranking
 
-bracket_creator = BracketCreator.new(config, reddit_hash, episode_list)
+bracket_creator = BracketCreator.new(config, reddit_hash, episode_keys_by_imdb_ranking)
 
-File.open(config.data_dir + "bracket.json", 'w') { |file|
-	file << bracket_creator.bracket.to_json
+File.open(config.data_dir + "/bracket.json", 'w') { |file|
+	file << JSON.pretty_generate(bracket_creator.bracket)
 }
-File.open(config.data_dir + "episode_lineups.json", 'w') { |file|
-  file << bracket_creator.episode_lineups.to_json
+File.open(config.data_dir + "/episode_lineups.json", 'w') { |file|
+  file << JSON.pretty_generate(bracket_creator.episode_lineups)
 }

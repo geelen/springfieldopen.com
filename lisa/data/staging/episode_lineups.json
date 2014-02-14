@@ -1,130 +1,152 @@
 [
   [
-    ["6.16 Bart vs. Australia", ["t3_1nmjqr", "http://images3.wikia.nocookie.net/__cb20120624110130/simpsons/images/3/36/Bart_vs._Australia_%28Promo_Picture%29.jpg"]],
-    [0, 0, 0, 0, 0]
+    [
+      {
+        "name": "t3_1nkri9",
+        "data": {
+          "season": 4,
+          "episode": 3,
+          "title": "Homer the Heretic",
+          "synopsis": "\"Homer the Heretic\" is the third episode of Season 4. It first aired on October 8, 1992. The episode was written by George Meyer and directed by Jim Reardon.\nHomer skips church one cold Sunday morning. After realizing the freedom and happiness he can obtain from having the house all to himself, Homer decides to stop going to church altogether despite Marge's disapproval.",
+          "images": [
+            "http://images1.wikia.nocookie.net/__cb20090404134051/simpsons/images/e/e7/God.gif"
+          ],
+          "synopsis_needs_attention": true
+        }
+      },
+      {
+        "name": "t3_1nkrov",
+        "data": {
+          "season": 7,
+          "episode": 4,
+          "title": "Bart Sells His Soul",
+          "synopsis": "After perpetrating a prank on the First Church of Springfield, Bart sells his soul to Milhouse for five dollars. Bart comes to regret his decision, and goes on a desperate quest to regain his soul. In the end, he gets it back with the help of an unexpected source.",
+          "images": [
+            "http://images4.wikia.nocookie.net/__cb20080502195816/simpsons/images/2/27/Bc.png",
+            "http://images3.wikia.nocookie.net/__cb20100307214644/simpsons/images/0/0d/800px-Flag_of_the_United_Kingdom.svg.png",
+            "http://images1.wikia.nocookie.net/__cb20120624114506/simpsons/images/3/3c/Bart_Sells_His_Soul_%28Promo_Picture%29.gif",
+            "http://images2.wikia.nocookie.net/__cb20120904180131/simpsons/images/a/a1/Bshs_moleman.jpg"
+          ],
+          "synopsis_needs_attention": false
+        }
+      }
+    ],
+    [
+      0,
+      0
+    ]
   ],
   [
-    ["3.13 Radio Bart", ["t3_1nmjsc", "http://images2.wikia.nocookie.net/__cb20120210012859/simpsons/images/d/d7/Radio_Bart.gif"]],
-    [0, 0, 0, 0, 0]
+    [
+      {
+        "name": "t3_1nkrge",
+        "data": {
+          "season": 8,
+          "episode": 2,
+          "title": "You Only Move Twice",
+          "synopsis": "Homer moves the family to a new town after he receives a better job offer, at a better nuclear power plant, but Homer is oblivious to the fact that his new boss is a James Bond-style super villain who is out to rule the world.",
+          "images": [
+            "http://images3.wikia.nocookie.net/__cb20120624193137/simpsons/images/f/fb/You_Only_Move_Twice_%28Promo_Picture%29.gif",
+            "http://images2.wikia.nocookie.net/__cb20111001224115/simpsons/images/b/bd/Cypress_Creek.png",
+            "http://images2.wikia.nocookie.net/__cb20111001215932/simpsons/images/9/92/235px-Scorpio_with_Bont.png"
+          ],
+          "synopsis_needs_attention": false
+        }
+      },
+      {
+        "name": "t3_1nmjg2",
+        "data": {
+          "season": 6,
+          "episode": 15,
+          "title": "Homie the Clown",
+          "synopsis": "\"Homie the Clown\" is the fifteenth episode of Season 6 and aired on February 12, 1995. The episode was written by John Swartzwelder and directed by David Silverman. After spotting a billboard for clown college, Homer cannot resist and upon becoming an official Krusty the Clown impersonator Homer runs into some trouble with the mob.",
+          "images": [
+            "http://images2.wikia.nocookie.net/__cb20100603161958/simpsons/images/f/f8/Homie_the_clown.jpg",
+            "http://images3.wikia.nocookie.net/__cb20120624105946/simpsons/images/7/7f/Homie_the_Clown_%28Promo_Picture%29.gif",
+            "http://images1.wikia.nocookie.net/simpsons/images/e/e5/Krusty_The_Clown.png"
+          ],
+          "synopsis_needs_attention": true
+        }
+      }
+    ],
+    [
+      0,
+      0
+    ]
   ],
   [
-    ["7.4 Bart Sells His Soul", ["t3_1nkrov", "http://images4.wikia.nocookie.net/__cb20080502195816/simpsons/images/2/27/Bc.png"]],
-    [1, 0, 0, 0, 0]
+    [
+      {
+        "name": "t3_1nkrk0",
+        "data": {
+          "season": 6,
+          "episode": 9,
+          "title": "Homer Badman",
+          "synopsis": "Homer and Marge attend a candy convention and hire a babysitter for the kids. After the convention, Homer gives the babysitter a ride home. He notices a very rare Gummi candy stuck to her bottom, so he reaches out and grabs it. Homer is accused of sexual harassment, and the whole town and the media are against him until Groundskeeper Willie saves the day by giving proof of Homer's innocence.",
+          "images": [
+            "http://images3.wikia.nocookie.net/__cb20120624104924/simpsons/images/4/42/Homer_Badman_%28Promo_Picture%29.jpg",
+            "http://images2.wikia.nocookie.net/__cb20080502185605/simpsons/images/2/23/Ap.png"
+          ],
+          "synopsis_needs_attention": false
+        }
+      },
+      {
+        "name": "t3_1nkrny",
+        "data": {
+          "season": 7,
+          "episode": 7,
+          "title": "King-Size Homer",
+          "synopsis": "Homer tries everything to get out of the plant's new exercise program and discovers that being on disability would do just that. With Bart's help, Homer starts eating everything he can, even playdough.",
+          "images": [
+            "http://images3.wikia.nocookie.net/__cb20120624185404/simpsons/images/7/71/King-Size_Homer_%28Promo_Picture%29.jpg",
+            "http://images4.wikia.nocookie.net/__cb20120624185541/simpsons/images/7/78/King-Size_Homer_%28Promo_Picture%29_2.jpg",
+            "http://images2.wikia.nocookie.net/__cb20120605072247/simpsons/images/5/5c/Simpsons_Mania_-_King-Size_Homer.PNG",
+            "http://images4.wikia.nocookie.net/__cb20100226052647/simpsons/images/c/ce/Kingsizehomer.jpg"
+          ],
+          "synopsis_needs_attention": false
+        }
+      }
+    ],
+    [
+      1,
+      0
+    ]
   ],
   [
-    ["3.4 Bart the Murderer", ["t3_1nmjt9", "http://images1.wikia.nocookie.net/__cb20060627201034/simpsons/images/3/39/Bart_the_Murderer.gif"]],
-    [1, 0, 0, 0, 0]
-  ],
-  [
-    ["8.18 Homer vs. the 18th Amendment", ["t3_1nmjr6", "http://images3.wikia.nocookie.net/__cb20080502215025/simpsons/images/5/53/By.png"]],
-    [2, 1, 0, 0, 0]
-  ],
-  [
-    ["5.8 Boy Scoutz 'n the Hood", ["t3_1nmjrv", "http://images4.wikia.nocookie.net/__cb20120623214604/simpsons/images/c/cc/Boy-Scoutz_N_the_Hood_%28Promo_Picture%29.gif"]],
-    [2, 1, 0, 0, 0]
-  ],
-  [
-    ["4.3 Homer the Heretic", ["t3_1nkri9", "http://images1.wikia.nocookie.net/__cb20090404134051/simpsons/images/e/e7/God.gif"]],
-    [3, 1, 0, 0, 0]
-  ],
-  [
-    ["6.6 Treehouse of Horror V", ["t3_1nmjtl", "http://images1.wikia.nocookie.net/__cb20100610202805/simpsons/images/f/f1/Donut_Homer.jpg"]],
-    [3, 1, 0, 0, 0]
-  ],
-  [
-    ["6.14 Bart's Comet", ["t3_1nmjqk", "http://images4.wikia.nocookie.net/__cb20060921191756/simpsons/images/2/29/Bart%27sComet.JPG"]],
-    [4, 2, 1, 0, 0]
-  ],
-  [
-    ["4.5 Treehouse of Horror III", ["t3_1nmjsi", "http://images1.wikia.nocookie.net/__cb20100610202805/simpsons/images/f/f1/Donut_Homer.jpg"]],
-    [4, 2, 1, 0, 0]
-  ],
-  [
-    ["6.15 Homie the Clown", ["t3_1nmjg2", "http://images2.wikia.nocookie.net/__cb20100603161958/simpsons/images/f/f8/Homie_the_clown.jpg"]],
-    [5, 2, 1, 0, 0]
-  ],
-  [
-    ["3.10 Flaming Moe's", ["t3_1nmjt0", "http://images2.wikia.nocookie.net/__cb20120623211024/simpsons/images/a/af/Flaming_Moe%27s_%28Promo_Picture%29.gif"]],
-    [5, 2, 1, 0, 0]
-  ],
-  [
-    ["6.24 Lemon of Troy", ["t3_1nmjrb", "http://images2.wikia.nocookie.net/__cb20060923195832/simpsons/images/9/94/LemonofTroy.JPG"]],
-    [6, 3, 1, 0, 0]
-  ],
-  [
-    ["6.4 Itchy & Scratchy Land", ["t3_1nr6tk", "http://images3.wikia.nocookie.net/__cb20120624104108/simpsons/images/b/bd/Itchy_%26_Scratchy_Land_%28Promo_Picture%29_2.jpg"]],
-    [6, 3, 1, 0, 0]
-  ],
-  [
-    ["8.2 You Only Move Twice", ["t3_1nkrge", "http://images3.wikia.nocookie.net/__cb20120624193137/simpsons/images/f/fb/You_Only_Move_Twice_%28Promo_Picture%29.gif"]],
-    [7, 3, 1, 0, 0]
-  ],
-  [
-    ["8.9 El Viaje Misterioso de Nuestro Homer", ["t3_1nmjtt", "http://images2.wikia.nocookie.net/__cb20080622124115/simpsons/images/0/0d/Mysterious_voyage.png"]],
-    [7, 3, 1, 0, 0]
-  ],
-  [
-    ["5.5 Treehouse of Horror IV", ["t3_1nmjqu", "http://images1.wikia.nocookie.net/__cb20100610202805/simpsons/images/f/f1/Donut_Homer.jpg"]],
-    [8, 4, 2, 1, 0]
-  ],
-  [
-    ["8.23 Homer's Enemy", ["t3_1nmjs8", "http://images4.wikia.nocookie.net/__cb20070704180234/simpsons/images/2/2c/Homer%27s_Enemy.jpg"]],
-    [8, 4, 2, 1, 0]
-  ],
-  [
-    ["7.7 King Size Homer", ["t3_1nkrny", "http://images3.wikia.nocookie.net/__cb20120624185404/simpsons/images/7/71/King-Size_Homer_%28Promo_Picture%29.jpg"]],
-    [9, 4, 2, 1, 0]
-  ],
-  [
-    ["4.9 Mr. Plow", ["t3_1nmjtc", "http://images1.wikia.nocookie.net/__cb20130718032804/simpsons/images/d/d1/Mr_Plow.gif"]],
-    [9, 4, 2, 1, 0]
-  ],
-  [
-    ["5.10 $pringfield (or How I Learned to Stop Worrying and Love Legalized Gambling)", ["t3_1nmjqz", "http://images1.wikia.nocookie.net/__cb20120623215010/simpsons/images/6/6f/%24pringfield_%28Or%2C_How_I_Learned_to_Stop_Worrying_and_Love_Legalized_Gambling%29_%28Promo_Picture%29.gif"]],
-    [10, 5, 2, 1, 0]
-  ],
-  [
-    ["12.18 Trilogy of Error", ["t3_1nmjs0", "http://images2.wikia.nocookie.net/__cb20090324021857/simpsons/images/5/56/TrilogyofError1.gif"]],
-    [10, 5, 2, 1, 0]
-  ],
-  [
-    ["6.9 Homer Badman", ["t3_1nkrk0", "http://images3.wikia.nocookie.net/__cb20120624104924/simpsons/images/4/42/Homer_Badman_%28Promo_Picture%29.jpg"]],
-    [11, 5, 2, 1, 0]
-  ],
-  [
-    ["7.12 Team Homer", ["t3_1nmjtg", "http://images3.wikia.nocookie.net/__cb20061231125733/simpsons/images/1/19/TeamHomer.JPG"]],
-    [11, 5, 2, 1, 0]
-  ],
-  [
-    ["6.1 Bart of Darkness", ["t3_1nmjqd", "http://images3.wikia.nocookie.net/__cb20120624102143/simpsons/images/2/2a/Bart_of_Darkness_%28Promo_Picture%29.jpg"]],
-    [12, 6, 3, 1, 0]
-  ],
-  [
-    ["7.13 Two Bad Neighbors", ["t3_1nmjsk", "http://images2.wikia.nocookie.net/__cb20080502203703/simpsons/images/a/ac/Bi.jpg"]],
-    [12, 6, 3, 1, 0]
-  ],
-  [
-    ["8.15 Homer's Phobia", ["t3_1nmjq6", "http://images1.wikia.nocookie.net/__cb20120624194544/simpsons/images/9/9a/Homer%27s_Phobia_%28Promo_Picture%29.jpg"]],
-    [13, 6, 3, 1, 0]
-  ],
-  [
-    ["6.25 Who Shot Mr. Burns?: Part 1", ["t3_1nmjsw", "http://images4.wikia.nocookie.net/__cb20060701215361/simpsons/images/0/0f/Who_Shot_Mr_Burns.gif"]],
-    [13, 6, 3, 1, 0]
-  ],
-  [
-    ["7.6 Treehouse of Horror VI", ["t3_1nmjrh", "http://images1.wikia.nocookie.net/__cb20100610202805/simpsons/images/f/f1/Donut_Homer.jpg"]],
-    [14, 7, 3, 1, 0]
-  ],
-  [
-    ["5.3 Homer Goes to College", ["t3_1nmjrl", "http://images1.wikia.nocookie.net/__cb20100331153918/simpsons/images/f/f8/Homer_Goes_to_College_promo.gif"]],
-    [14, 7, 3, 1, 0]
-  ],
-  [
-    ["5.4 Rosebud", ["t3_1nkral", "http://images2.wikia.nocookie.net/__cb20120623213811/simpsons/images/6/6c/Rosebud_%28Promo_Picture%29.gif"]],
-    [15, 7, 3, 1, 0]
-  ],
-  [
-    ["4.17 Last Exit to Springfield", ["t3_1nmju1", "http://images3.wikia.nocookie.net/__cb20121116191820/simpsons/images/e/eb/Last_exit.png"]],
-    [15, 7, 3, 1, 0]
+    [
+      {
+        "name": "t3_1nkral",
+        "data": {
+          "season": 5,
+          "episode": 4,
+          "title": "Rosebud",
+          "synopsis": "Yearning for his lost youth and innocence, Mr. Burns searches for his beloved childhood teddy bear, Bobo. When Maggie comes across the bear, she claims it as her own. Mr. Burns tries to get his Bobo back by any means necessary.",
+          "images": [
+            "http://images2.wikia.nocookie.net/__cb20120623213811/simpsons/images/6/6c/Rosebud_%28Promo_Picture%29.gif",
+            "http://images2.wikia.nocookie.net/__cb20060827184409/simpsons/images/3/3c/Rosebud.JPG",
+            "http://images3.wikia.nocookie.net/__cb20121216012720/simpsons/images/e/e7/Rosebud_-_Burns.png"
+          ],
+          "synopsis_needs_attention": false
+        }
+      },
+      {
+        "name": "t3_1nmjq6",
+        "data": {
+          "season": 8,
+          "episode": 15,
+          "title": "Homer's Phobia",
+          "synopsis": "\"Homer's Phobia\" is the fifteenth episode of Season 8 and aired on February 16, 1997. The episode was written by Ron Hauge and directed by Mike B. Anderson. John Waters guest stars as John (Homer's Phobia). A shop owner befriends the Simpson family, but after discovering he is a homosexual Homer fears Bart will emulate him.",
+          "images": [
+            "http://images1.wikia.nocookie.net/__cb20120624194544/simpsons/images/9/9a/Homer%27s_Phobia_%28Promo_Picture%29.jpg",
+            "http://images3.wikia.nocookie.net/__cb20080617145103/simpsons/images/b/b0/Homer%27sPhobia2.png"
+          ],
+          "synopsis_needs_attention": true
+        }
+      }
+    ],
+    [
+      1,
+      0
+    ]
   ]
 ]
