@@ -13,8 +13,8 @@ class BracketCreator
     @ranked_reddit_ids ||= @keys_by_ranking.map { |episode| @data_hash[episode] }
   end
 
-  def episode_lineups
-    @episode_lineups ||= episode_battles(bracket, [0])
+  def lineups
+    @lineups ||= create_lineups(bracket)
   end
 
   private
@@ -27,12 +27,12 @@ class BracketCreator
   	partitioned_seeds.map { |s| partition_seeds(s) }
   end
 
-  def episode_battles bracket, round_inds
-  	return [[bracket,round_inds[1..-1]]] unless bracket.first.is_a? Array
+  def create_lineups bracket, round_inds = [0]
+  	return [{data: bracket, lineup: round_inds[1..-1]}] unless bracket.is_a? Array
   	battles = []
   	bracket.each_with_index { |b,i|
   		ind = 2*round_inds.first + i
-  		battles += episode_battles(b, round_inds.dup.unshift(ind))
+  		battles += create_lineups(b, round_inds.dup.unshift(ind))
   	}
   	battles
   end

@@ -27,4 +27,38 @@ describe BracketCreator do
       its(:bracket) { should == [[["1"], ["4", "5"]], ["2", "3"]] }
     end
   end
+
+  describe :lineups do
+    context "with 2 episodes" do
+      let(:keys_by_ranking) { [5, 1] }
+      its(:lineups) { should == [
+        { data: "5", lineup: [0] },
+        { data: "1", lineup: [0] }
+      ] }
+    end
+
+    context "with 4 episodes" do
+      let(:keys_by_ranking) { [1, 2, 3, 4] }
+      its(:lineups) { should == [
+        { data: "1", lineup: [0,0] },
+        { data: "4", lineup: [0,0] },
+        { data: "2", lineup: [1,0] },
+        { data: "3", lineup: [1,0] }
+      ] }
+    end
+
+    context "with 8 episodes" do
+      let(:keys_by_ranking) { [1, 2, 3, 4, 5, 6, 7, 8] }
+      its(:lineups) { should == [
+        { data: "1", lineup: [0,0,0] },
+        { data: "8", lineup: [0,0,0] },
+        { data: "4", lineup: [1,0,0] },
+        { data: "5", lineup: [1,0,0] },
+        { data: "2", lineup: [2,1,0] },
+        { data: "7", lineup: [2,1,0] },
+        { data: "3", lineup: [3,1,0] },
+        { data: "6", lineup: [3,1,0] }
+      ] }
+    end
+  end
 end
