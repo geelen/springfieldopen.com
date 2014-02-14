@@ -1,9 +1,9 @@
 Bundler.require
-require './episode_loader.rb'
+require File.dirname(__FILE__) + '/../lib/episode_loader.rb'
 
 def partition_seeds seeds
 	return seeds if seeds.length <= 2
-	seeds_with_indices = seeds.each_with_index 
+	seeds_with_indices = seeds.each_with_index
 	partitioned_seeds_with_indices = seeds_with_indices.partition { |v,i| (i%4)==1 || (i%4)==2 }
 	partitioned_seeds = partitioned_seeds_with_indices.map { |e| e.map { |v,i| v }}
 	partitioned_seeds.map { |s| partition_seeds(s) }
@@ -12,9 +12,9 @@ end
 def episode_battles bracket, round_inds
 	return [[bracket,round_inds[1..-1]]] unless bracket.first.is_a? Array
 	battles = []
-	bracket.each_with_index { |b,i| 
+	bracket.each_with_index { |b,i|
 		ind = 2*round_inds.first + i
-		battles += episode_battles(b, round_inds.dup.unshift(ind)) 
+		battles += episode_battles(b, round_inds.dup.unshift(ind))
 	}
 	battles
 end

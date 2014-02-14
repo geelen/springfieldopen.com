@@ -1,5 +1,5 @@
 Bundler.require
-require './reddit_poster.rb'
+require File.dirname(__FILE__) + '/../lib/reddit_poster.rb'
 Dotenv.load
 
 def get_battles episodes

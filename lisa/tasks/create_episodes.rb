@@ -1,6 +1,6 @@
 Bundler.require
-require './episode_loader.rb'
-require './reddit_poster.rb'
+require File.dirname(__FILE__) + '/../lib/episode_loader.rb'
+require File.dirname(__FILE__) + '/../lib/reddit_poster.rb'
 Dotenv.load
 
 subreddit = "SpringfieldOpenEps"

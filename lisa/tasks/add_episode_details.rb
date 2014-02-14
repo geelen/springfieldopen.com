@@ -1,8 +1,9 @@
 Bundler.require
-require './episode_loader.rb'
-require './reddit_poster.rb'
+require File.dirname(__FILE__) + '/../lib/episode_loader.rb'
+require File.dirname(__FILE__) + '/../lib/reddit_poster.rb'
 require 'yaml'
 Dotenv.load
+exit 1
 
 subreddit = "SpringfieldOpenEps"
 refresh_token = ENV["REDDIT_REFRESH_TOKEN"]
@@ -12,8 +13,8 @@ poster = RedditPoster.new(refresh_token,subreddit)
 # puts JSON.pretty_generate(response)
 episodes = EpisodeLoader.reddit_hash
 episode_details = JSON.parse(File.read("data/wikia_episodes.json"))
-details_hash = episode_details.group_by { |ep| 
-	"#{ep['season']}.#{ep['episode']}" 
+details_hash = episode_details.group_by { |ep|
+	"#{ep['season']}.#{ep['episode']}"
 }
 
 # ["12.18 Trilogy of Error"].each do |title|
