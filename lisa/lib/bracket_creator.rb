@@ -2,15 +2,17 @@ class BracketCreator
 
   def initialize(data_hash, keys_by_ranking)
     @data_hash = data_hash
-    @keys_by_ranking = keys_by_ranking
+
+    next_power_of_two = 2**Math.log2(keys_by_ranking.length).ceil
+    @keys_by_ranking = keys_by_ranking + [nil]*(next_power_of_two - keys_by_ranking.length)
   end
 
   def bracket
-    @bracket ||= partition_seeds(ranked_reddit_ids)
+    @bracket ||= partition_seeds(ranked_data)
   end
 
-  def ranked_reddit_ids
-    @ranked_reddit_ids ||= @keys_by_ranking.map { |episode| @data_hash[episode] }
+  def ranked_data
+    @ranked_data ||= @keys_by_ranking.map { |episode| @data_hash[episode] }
   end
 
   def lineups
@@ -28,7 +30,7 @@ class BracketCreator
   end
 
   def create_lineups
-    num_rounds = Math.log2(ranked_reddit_ids.length).to_i
+    num_rounds = Math.log2(ranked_data.length).to_i
     bracket.flatten.each_with_index.map do |data, i|
       {data: data, lineup: 1.upto(num_rounds).map { |round|
         i / 2**round
