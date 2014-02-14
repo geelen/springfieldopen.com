@@ -14,7 +14,14 @@ class BracketCreator
   end
 
   def lineups
-    @lineups ||= create_lineups(bracket)
+    @lineups ||= begin  #create_lineups(bracket)
+      num_rounds = Math.log2(ranked_reddit_ids.length).to_i
+      bracket.flatten.each_with_index.map do |data, i|
+        {data: data, lineup: 1.upto(num_rounds).map { |round|
+          i / 2**round
+        }}
+      end
+    end
   end
 
   private
