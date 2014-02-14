@@ -1,17 +1,16 @@
 class BracketCreator
 
-  def initialize(config, reddit_hash, episode_keys_by_imdb_ranking)
-    @config = config
-    @reddit_hash = reddit_hash
-    @episode_keys_by_imdb_ranking = episode_keys_by_imdb_ranking
+  def initialize(data_hash, keys_by_ranking)
+    @data_hash = data_hash
+    @keys_by_ranking = keys_by_ranking
   end
 
   def bracket
-    @bracket ||= partition_seeds(ranked_reddit_ids[0...@config.total_episodes])
+    @bracket ||= partition_seeds(ranked_reddit_ids)
   end
 
   def ranked_reddit_ids
-    @ranked_reddit_ids ||= @episode_keys_by_imdb_ranking.map { |episode| battle_data(@reddit_hash[episode]) }
+    @ranked_reddit_ids ||= @keys_by_ranking.map { |episode| @data_hash[episode] }
   end
 
   def episode_lineups
@@ -20,14 +19,10 @@ class BracketCreator
 
   private
 
-  def battle_data(episode)
-    { name: episode['name'], data: JSON.parse(episode['selftext']) }
-  end
-
   def partition_seeds seeds
   	return seeds if seeds.length <= 2
   	seeds_with_indices = seeds.each_with_index
-  	partitioned_seeds_with_indices = seeds_with_indices.partition { |v,i| (i%4)==1 || (i%4)==2 }
+  	partitioned_seeds_with_indices = seeds_with_indices.partition { |v,i| (i%4)==0 || (i%4)==3 }
   	partitioned_seeds = partitioned_seeds_with_indices.map { |e| e.map { |v,i| v }}
   	partitioned_seeds.map { |s| partition_seeds(s) }
   end

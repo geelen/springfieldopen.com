@@ -7,7 +7,7 @@ config = LisaConfig.from_argv(ARGV)
 reddit_hash = EpisodeLoader.reddit_hash
 episode_keys_by_imdb_ranking = EpisodeLoader.episode_keys_by_imdb_ranking
 
-bracket_creator = BracketCreator.new(config, reddit_hash, episode_keys_by_imdb_ranking)
+bracket_creator = BracketCreator.new(reddit_hash, episode_keys_by_imdb_ranking[0..config.total_episodes])
 
 File.open(config.data_dir + "/bracket.json", 'w') { |file|
 	file << JSON.pretty_generate(bracket_creator.bracket)
