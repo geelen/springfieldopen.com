@@ -1,29 +1,33 @@
-Bundler.require
-require 'yaml'
-
 class EpisodeLoader
 
 	def self.reddit_hash
 		subreddit = "SpringfieldOpenEps"
 		url = "http://www.reddit.com/r/#{subreddit}.json"
-		response = HTTParty.get(url + "?limit=100")
+
+    response = HTTParty.get(url + "?limit=100")
+    puts "Loading Episodes"
+    print "."
+
 		full_episode_details = response['data']['children'].map { |child| child['data'] }
 		last_id = (full_episode_details.empty?) ? nil : full_episode_details[-1]['name']
 		while last_id
 			response = HTTParty.get(url + "?limit=100&after=#{last_id}")
+      print "."
 			new_episode_details = response['data']['children'].map { |child| child['data'] }
 			last_id = (new_episode_details.empty?) ? nil : new_episode_details[-1]['name']
 			full_episode_details += new_episode_details
-		end
-		Hash[full_episode_details.map { |ep| 
-			image_url = YAML.load(ep['selftext'])['images'].first
-			[ep['title'].gsub("&amp;","&"), [ep['name'], image_url]] 
+    end
+
+    puts
+		Hash[full_episode_details.map { |ep|
+			season_dot_episode = ep['title'][/\d+\.\d+/]
+      [season_dot_episode, ep]
 		}]
 	end
 
 	def self.local_imdb_list
-		full_hash = JSON.parse(File.read("data/episodes.json"))
-		full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" } 
+		full_hash = JSON.parse(File.read(File.dirname(__FILE__) + "/../data/episodes.json"))
+		full_hash.map { |ep| "#{ep['season']}.#{ep['episode']} #{ep['title']}" }
 	end
 
 end
