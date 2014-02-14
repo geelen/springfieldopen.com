@@ -14,14 +14,7 @@ class BracketCreator
   end
 
   def lineups
-    @lineups ||= begin  #create_lineups(bracket)
-      num_rounds = Math.log2(ranked_reddit_ids.length).to_i
-      bracket.flatten.each_with_index.map do |data, i|
-        {data: data, lineup: 1.upto(num_rounds).map { |round|
-          i / 2**round
-        }}
-      end
-    end
+    @lineups ||= create_lineups
   end
 
   private
@@ -34,14 +27,13 @@ class BracketCreator
   	partitioned_seeds.map { |s| partition_seeds(s) }
   end
 
-  def create_lineups bracket, round_inds = [0]
-  	return [{data: bracket, lineup: round_inds[1..-1]}] unless bracket.is_a? Array
-  	battles = []
-  	bracket.each_with_index { |b,i|
-  		ind = 2*round_inds.first + i
-  		battles += create_lineups(b, round_inds.dup.unshift(ind))
-  	}
-  	battles
+  def create_lineups
+    num_rounds = Math.log2(ranked_reddit_ids.length).to_i
+    bracket.flatten.each_with_index.map do |data, i|
+      {data: data, lineup: 1.upto(num_rounds).map { |round|
+        i / 2**round
+      }}
+    end
   end
 
 end
