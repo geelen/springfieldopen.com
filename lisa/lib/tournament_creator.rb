@@ -9,10 +9,24 @@ class TournamentCreator
 	def run
 		puts "Clearing subreddit..."
 		clear_subreddit
+		puts "Clearing episode matches..."
+		clear_episode_matches
 		puts "Creating rounds..."
 		create_rounds
-		puts "Creating round one matches..."
-		create_round_one_matches
+	end
+
+	def round_one_matches
+		return @round_one_matches if @round_one_matches
+		ep_pairs = @episodes.group_by { |ep| ep["lineup"].first }.values
+		@round_one_matches = ep_pairs.map { |pair|
+			pair.map { |ep| ep["data"] }
+		}
+	end
+
+	def round_one_name
+		return @round_one_name if @round_one_name
+		run
+		@round_one_name
 	end
 
 	private
@@ -32,44 +46,13 @@ class TournamentCreator
 		}
 	end
 
-	def create_round_one_matches
-		round_one_matches.each_with_index { |match,i|
-			match_name = create_match_comment(i)
-			create_episode_comment(match[0],match_name)
-			update_episode_selftext(match[0],match_name)
-			create_episode_comment(match[1],match_name)
-			update_episode_selftext(match[1],match_name)
+	def clear_episode_matches
+		@episodes.each { |episode| 
+			episode_data = JSON.parse(episode['data']['selftext'])
+			episode_data.delete('battles')
+			episode_data['matches'] = []
+			@reddit_poster.replace_text(episode['data']['name'],episode_data)
 		}
 	end
 
-	def create_match_comment i
-		data = {title: "Battle #{i+1}", final_score: "NA"}
-		response = @reddit_poster.comment(@round_one_name,data)
-		response['json']['data']['things'][0]['data']['name']
-	end
-
-	def create_episode_comment episode, match_name
-		episode_data = JSON.parse(episode['selftext'])
-		title = "#{episode_data['season']}.#{episode_data['episode']} #{episode_data['title']}"
-		data = {
-			name: episode['name'],
-			title: title,
-			image: episode_data["images"].first
-		}
-		@reddit_poster.comment(match_name,data)
-	end
-
-	def update_episode_selftext episode, match_name
-		episode_data = JSON.parse(episode['selftext'])
-		episode_data['battles'] = [match_name]
-		@reddit_poster.replace_text(episode['name'],episode_data)
-	end
-
-	def round_one_matches
-		return @round_one_matches if @round_one_matches
-		ep_pairs = @episodes.group_by { |ep| ep["lineup"].first }.values
-		@round_one_matches = ep_pairs.map { |pair|
-			pair.map { |ep| ep["data"] }
-		}
-	end
 end

@@ -10,10 +10,31 @@ class TournamentUpdater
 		determine_match_results
 		puts "Storing match results..."
 		store_results_of_round
-		puts "Creating new matches..."
-		create_new_matches
+	end
+
+	def new_matches all_episodes, round
+		round_name = @match_loader.upcoming_round['name']
+		episodes = all_episodes.select { |episode| 
+			@winners.include?(episode['data']['name'])
+		}
+		ep_pairs = episodes.group_by { |ep| ep["lineup"][round-1] }.values
+		ep_pairs.map { |pair|
+			pair.map { |ep| ep['data'] }
+		}
+	end
+	
+	def start_new_round
 		puts "Starting next round..."
-		update_statuses # (is this a word)
+		@reddit_poster.replace_text(current_round_name, {status: 'closed'})
+		@reddit_poster.replace_text(upcoming_round_name, {status: 'open'})
+	end
+
+	def upcoming_round_name
+		@match_loader.upcoming_round['name']
+	end
+
+	def current_round_name
+		@match_loader.open_round['name']
 	end
 
 	private
@@ -44,20 +65,6 @@ class TournamentUpdater
 		}
 	end
 
-	def create_new_matches
-		round_name = @match_loader.upcoming_round['name']
-		@winners.each { |winner|
-			# something...
-		}
-	end
-
-	def update_statuses
-		current_round_name = @match_loader.open_round['name']
-		next_round_name = @match_loader.upcoming_round['name']
-		@reddit_poster.replace_text(current_round_name, {status: 'closed'})
-		@reddit_poster.replace_text(next_round_name, {status: 'open'})
-	end
-
 	def parse_matches matches
 		matches.map { |match| 
 			eps = match[:episodes]
@@ -65,9 +72,9 @@ class TournamentUpdater
 				name: match[:name],
 				id: match[:id],
 				body: match[:body],
-				ep1_details: eps[0]["body"],
+				ep1_name: JSON.parse(eps[0]["body"])["name"],
 				ep1_score: eps[0]['ups']-eps[0]['downs'],
-				ep2_details: eps[1]["body"],
+				ep2_name: JSON.parse(eps[1]["body"])["name"],
 				ep2_score: eps[1]['ups']-eps[1]['downs'] 
 			}
 		}
@@ -78,10 +85,10 @@ class TournamentUpdater
 			if @results[i] == nil
 				if match[:ep1_score] > match[:ep2_score]
 					@results[i] = match
-					@winners[i] = match[:ep1_details]
+					@winners[i] = match[:ep1_name]
 				elsif match[:ep1_score] < match[:ep2_score]
 					@results[i] = match
-					@winners[i] = match[:ep2_details]
+					@winners[i] = match[:ep2_name]
 				end
 			end
 		}
@@ -92,10 +99,10 @@ class TournamentUpdater
 			if @results[i] == nil
 				if (rand < 0.5)
 					match[:ep1_score] += 1
-					@winners[i] = match[:ep1_details]
+					@winners[i] = match[:ep1_name]
 				else
 					match[:ep2_score] += 1
-					@winners[i] = match[:ep2_details]
+					@winners[i] = match[:ep2_name]
 				end
 				@results[i] = match
 			end

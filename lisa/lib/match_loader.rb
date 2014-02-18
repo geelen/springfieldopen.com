@@ -2,10 +2,6 @@ class MatchLoader
 
 	def initialize subreddit
 		@base_url = "http://www.reddit.com/r/#{subreddit}" 
-		reload_rounds
-	end
-
-	def reload_rounds
 		response = HTTParty.get(@base_url + "/new.json")
 		@rounds = response['data']['children'].map { |r| r['data'] }
 	end
