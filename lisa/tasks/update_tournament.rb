@@ -14,7 +14,10 @@ p match_loader.open_round['title']
 matches = match_loader.open_matches
 p matches.map { |match|
 	eps = match.map { |ep| 
-		{ body: ep['body'].split("\n").last, score: ep['ups']-ep['downs'] }
+		{ 
+			body: JSON.parse(ep['body'])['title'], 
+			score: ep['ups']-ep['downs'] 
+		}
 	}
 	p eps
 	if eps[0][:score] > eps[1][:score]

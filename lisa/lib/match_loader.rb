@@ -30,7 +30,9 @@ class MatchLoader
 	private
 
 	def index_of_open_round 
-		@rounds.find_index { |round| round['selftext'] == 'open' }
+		@rounds.find_index { |round| 
+			JSON.parse(round['selftext'])['status'] == 'open' 
+		}
 	end
 
 end
