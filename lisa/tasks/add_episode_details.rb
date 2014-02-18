@@ -23,7 +23,7 @@ episodes.keys.each do |ep_id|
 		details = details_hash[ep_id]
     #puts episodes[ep_id]['name']
     #puts JSON.pretty_generate(details).gsub(/^/,"    ")
-    response = poster.replace_text(episodes[ep_id]['name'], JSON.pretty_generate(details).gsub(/^/,"    "))
+    response = poster.replace_text(episodes[ep_id]['name'], details)
 		#p response
     puts JSON.pretty_generate(response)
 	else

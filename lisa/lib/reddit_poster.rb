@@ -22,13 +22,13 @@ class RedditPoster
 	  HTTParty.get('https://oauth.reddit.com/api/v1/me.json', options)
 	end
 
-	def post title, text
+	def post title, data
 		body_hash = {
       api_type: 'json',
       kind: 'self',
       save: 'true',
       title: CGI.escape(title),
-      text: CGI.escape(text),
+      text: CGI.escape(data_to_json(data)),
       sr: @subreddit
     }
 		options = {
@@ -49,24 +49,23 @@ class RedditPoster
 	  HTTParty.post('https://oauth.reddit.com/api/del', options)
 	end
 
-	def clear_subreddit subreddit
-		url = "http://www.reddit.com/r/#{subreddit}.json"
+	def clear_subreddit
+		url = "http://www.reddit.com/r/#{@subreddit}.json"
 		response = HTTParty.get(url)
-		puts JSON.pretty_generate(response)
 		while response['data']['children'].length > 0
 			response['data']['children'].each { |post|
 				response = delete(post['data']['name'])
 			}
 			response = HTTParty.get(url)
-			puts JSON.pretty_generate(response)
 		end
 	end
 
-	def replace_text thingname, text
+	def replace_text thingname, data
+		text = JSON.pretty_generate(data).gsub(/^/,"    ")
 		body_hash = {
       api_type: 'json',
       thing_id: thingname,
-      text: CGI.escape(text),
+      text: CGI.escape(data_to_json(data))
     }
 		options = {
 	    headers: @headers,
@@ -75,11 +74,11 @@ class RedditPoster
 	  HTTParty.post('https://oauth.reddit.com/api/editusertext.json', options)
 	end
 
-	def comment thingname, text
+	def comment thingname, data
 		body_hash = {
       api_type: 'json',
       thing_id: thingname,
-      text: CGI.escape(text),
+      text: CGI.escape(data_to_json(data))
     }
 		options = {
 	    headers: @headers,
@@ -98,5 +97,9 @@ class RedditPoster
 
 	def hash_to_body hash
     hash.map { |k,v| "#{k}=#{v}" }.join("&")
+  end
+
+  def data_to_json data
+  	JSON.pretty_generate(data).gsub(/^/,"    ")
   end
 end

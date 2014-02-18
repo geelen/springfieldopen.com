@@ -13,6 +13,6 @@ all_episodes = EpisodeLoader.local_imdb_list
 episodes = all_episodes - existing_eps
 
 episodes.each do |title|
-  response = poster.post(title,"This is a test")
+  response = poster.post(title,{})
   puts JSON.pretty_generate(response)
 end
