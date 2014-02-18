@@ -1,15 +1,26 @@
 class MatchLoader
 
-	def self.get_open_round subreddit
-		response = HTTParty.get(self.base_url(subreddit) + ".json?limit=100")
-		rounds = response['data']['children'].map { |r| r['data'] }
-		rounds.select { |r| r['selftext'] == 'open' }.first
+	def initialize subreddit
+		@base_url = "http://www.reddit.com/r/#{subreddit}" 
+		reload_rounds
 	end
 
-	def self.load_open_matches subreddit
-		open_round = self.get_open_round(subreddit)
+	def reload_rounds
+		response = HTTParty.get(@base_url + "/new.json")
+		@rounds = response['data']['children'].map { |r| r['data'] }
+	end
+
+	def open_round
+		@rounds[index_of_open_round]
+	end
+
+	def upcoming_round
+		(index_of_open_round > 0) ? @rounds[index_of_open_round-1] : nil
+	end
+
+	def open_matches
 		puts "Open Round is '#{open_round['title']}'."
-		url = base_url(subreddit) + "/comments/#{open_round['id']}.json"
+		url = @base_url + "/comments/#{open_round['id']}.json"
 		response = HTTParty.get(url)
 		response.last['data']['children'].map { |m| 
 			m['data']['replies']['data']['children'].map { |ep| ep['data'] } 
@@ -18,7 +29,8 @@ class MatchLoader
 
 	private
 
-	def self.base_url subreddit
-		"http://www.reddit.com/r/#{subreddit}"
+	def index_of_open_round 
+		@rounds.find_index { |round| round['selftext'] == 'open' }
 	end
+
 end
