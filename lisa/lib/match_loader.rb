@@ -14,6 +14,10 @@ class MatchLoader
 		(index_of_open_round > 0) ? @rounds[index_of_open_round-1] : nil
 	end
 
+	def open_round_number
+		@rounds.length - index_of_open_round
+	end 
+
 	def open_matches
 		url = @base_url + "/comments/#{open_round['id']}.json"
 		response = HTTParty.get(url)

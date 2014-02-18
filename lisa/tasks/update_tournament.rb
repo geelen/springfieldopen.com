@@ -13,10 +13,9 @@ episodes = JSON.parse(File.read("data/staging/episode_lineups.json"))
 
 tournament_updater = TournamentUpdater.new(match_loader,poster)
 tournament_updater.run
-matches = tournament_updater.new_matches(episodes,3)
+matches = tournament_updater.new_matches(episodes)
 round_name = tournament_updater.upcoming_round_name
 
-puts "Creating new matches..."
 match_creator = MatchCreator.new(poster,round_name,matches)
 match_creator.run
 

@@ -8,6 +8,7 @@ class MatchCreator
 	end
 
 	def run
+		puts "Creating upcoming matches..."
 		@matches.each_with_index { |match,i|
 			match_name = create_match_comment(i)
 			create_episode_comment(match[0],match_name)

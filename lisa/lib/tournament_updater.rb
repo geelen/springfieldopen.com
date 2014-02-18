@@ -12,25 +12,36 @@ class TournamentUpdater
 		store_results_of_round
 	end
 
-	def new_matches all_episodes, round
-		round_name = @match_loader.upcoming_round['name']
-		episodes = all_episodes.select { |episode| 
-			@winners.include?(episode['data']['name'])
-		}
-		ep_pairs = episodes.group_by { |ep| ep["lineup"][round-1] }.values
-		ep_pairs.map { |pair|
-			pair.map { |ep| ep['data'] }
-		}
+	def new_matches all_episodes
+		round_number = @match_loader.open_round_number + 1
+		round = @match_loader.upcoming_round
+		if round
+			round_name = @match_loader.upcoming_round['name']
+			episodes = all_episodes.select { |episode| 
+				@winners.include?(episode['data']['name'])
+			}
+			ep_pairs = episodes.group_by { |ep| 
+				ep["lineup"][round_number-1] 
+			}.values
+			ep_pairs.map { |pair|
+				pair.map { |ep| ep['data'] }
+			}
+		else
+			[]
+		end
 	end
 	
 	def start_new_round
 		puts "Starting next round..."
 		@reddit_poster.replace_text(current_round_name, {status: 'closed'})
-		@reddit_poster.replace_text(upcoming_round_name, {status: 'open'})
+		if upcoming_round_name
+			@reddit_poster.replace_text(upcoming_round_name, {status: 'open'})
+		end
 	end
 
 	def upcoming_round_name
-		@match_loader.upcoming_round['name']
+		round = @match_loader.upcoming_round
+		round ? round['name'] : nil
 	end
 
 	def current_round_name
