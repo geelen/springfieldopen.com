@@ -19,11 +19,17 @@ class MatchLoader
 	end
 
 	def open_matches
-		puts "Open Round is '#{open_round['title']}'."
 		url = @base_url + "/comments/#{open_round['id']}.json"
 		response = HTTParty.get(url)
-		response.last['data']['children'].map { |m| 
-			m['data']['replies']['data']['children'].map { |ep| ep['data'] } 
+		response.last['data']['children'].map { |match|
+			data = match['data']
+			eps = data['replies']['data']['children'].map { |ep| ep['data'] } 
+			{ 
+				name: data['name'],
+				id: data['id'],
+				body: data['body'],
+				episodes: eps
+			}
 		}
 	end
 

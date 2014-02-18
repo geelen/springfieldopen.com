@@ -43,7 +43,7 @@ class TournamentCreator
 	end
 
 	def create_match_comment i
-		data = {title: "Battle #{i+1}"}
+		data = {title: "Battle #{i+1}", final_score: "NA"}
 		response = @reddit_poster.comment(@round_one_name,data)
 		response['json']['data']['things'][0]['data']['name']
 	end
