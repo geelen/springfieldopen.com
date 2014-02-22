@@ -1,15 +1,13 @@
 class MatchCreator
 
-	def initialize reddit_poster, round_name, matches
+	def initialize reddit_poster, round_name, ep_subreddit
 		@reddit_poster = reddit_poster
 		@round_name = round_name
-		@matches = matches
-		@ep_url = "http://www.reddit.com/r/SpringfieldOpenEps/"
+		@ep_url = "http://www.reddit.com/r/#{ep_subreddit}/"
 	end
 
-	def run
-		puts "Creating upcoming matches..."
-		@matches.each_with_index { |match,i|
+	def create_matches matches
+		matches.each_with_index { |match,i|
 			match_name = create_match_comment(i)
 			create_episode_comment(match[0],match_name)
 			update_episode_selftext(match[0],match_name)

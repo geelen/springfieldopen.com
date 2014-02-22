@@ -6,12 +6,9 @@ class TournamentCreator
 		@num_rounds = episodes.first["lineup"].length
 	end
 
-	def run
-		puts "Clearing subreddit..."
+	def prepare_for_tournment
 		clear_subreddit
-		puts "Clearing episode matches..."
 		clear_episode_matches
-		puts "Creating rounds..."
 		create_rounds
 	end
 

@@ -1,22 +1,13 @@
+require 'bundler'
 Bundler.require
-require File.dirname(__FILE__) + '/../lib/reddit_poster.rb'
-require File.dirname(__FILE__) + '/../lib/match_loader.rb'
-require File.dirname(__FILE__) + '/../lib/tournament_updater.rb'
-require File.dirname(__FILE__) + '/../lib/match_creator.rb'
+require_relative '../lib/reddit_poster'
+require_relative '../lib/tournament_manager'
+require_relative '../lib/lisa_config'
 Dotenv.load
 
-subreddit = 'SpringfieldOpen'
-match_loader = MatchLoader.new(subreddit)
+config = LisaConfig.from_argv(ARGV)
 refresh_token = ENV["REDDIT_REFRESH_TOKEN"]
-poster = RedditPoster.new(refresh_token,subreddit)
-episodes = JSON.parse(File.read("data/staging/episode_lineups.json"))
-
-tournament_updater = TournamentUpdater.new(match_loader,poster)
-tournament_updater.run
-matches = tournament_updater.new_matches(episodes)
-round_name = tournament_updater.upcoming_round_name
-
-match_creator = MatchCreator.new(poster,round_name,matches)
-match_creator.run
-
-tournament_updater.start_new_round
+poster = RedditPoster.new(refresh_token,config.subreddit)
+manager = TournamentManager.new(config,poster)
+manager.perform_update_if_its_time
+manager.close_log
