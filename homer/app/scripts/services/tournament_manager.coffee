@@ -11,10 +11,10 @@ load_battle = (comments) ->
 
 load_battle_episode = (comment) ->
   battle_ep = comment
-  ep_details = comment.body.split("\n")
-  battle_ep.ep_name = ep_details[0]
-  battle_ep.ep_image_url = ep_details[1]
-  title_pieces = ep_details[2].split(" ")
+  battle_ep.ep_name = angular.fromJson(comment.body)['name']
+  battle_ep.ep_image_url = angular.fromJson(comment.body)['image']
+  battle_ep.ep_full_title = angular.fromJson(comment.body)['title']
+  title_pieces = battle_ep.ep_full_title.split(" ")
   battle_ep.ep_num = title_pieces[0]
   battle_ep.ep_title = title_pieces[1..title_pieces.length-1].join(" ")
   battle_ep
@@ -25,15 +25,18 @@ app.factory 'TournamentManager', (RedditApi) ->
   }
 
   TournamentManager.update_battles = ->
-    RedditApi.get("/r/SpringfieldOpen.json").then (response) ->
+    RedditApi.get("/r/SpringfieldOpenTest.json").then (response) ->
       setTimeout(TournamentManager.update_battles, 10 * 1000)
-
       rounds = response.data.data.children
-      open_round = (rounds.filter (c) -> c.data.selftext == "open")[0]
-      round_post = open_round.data.id
-      RedditApi.get("/comments/#{round_post}.json").then (response) ->
-        TournamentManager.battles = response.data[1].data.children.map (c) ->
-          load_battle(c.data.replies.data.children)
+      open_round = (rounds.filter (c) -> 
+        angular.fromJson(c.data.selftext)['status'] == "open"
+      )[0]
+      if open_round
+        round_post = open_round.data.id
+        console.log(open_round.data.title)
+        RedditApi.get("/comments/#{round_post}.json").then (response) ->
+          TournamentManager.battles = response.data[1].data.children.map (c) ->
+            load_battle(c.data.replies.data.children)
 
   TournamentManager.update_battles()
   TournamentManager

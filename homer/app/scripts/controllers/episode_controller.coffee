@@ -42,7 +42,8 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
   RedditApi.get("/comments/#{$stateParams.episode_id}.json?limit=0").then (response) ->
     $scope.title = response.data[0].data.children[0].data.title
     $scope.reddit_name = response.data[0].data.children[0].data.name
-    $scope.ep_details = jsyaml.safeLoad(response.data[0].data.children[0].data.selftext)
+    $scope.ep_details = angular.fromJson(response.data[0].data.children[0].data.selftext)
+    console.log($scope.ep_details)
     $scope.comment_data = response.data[1].data
     $scope.comment_data.name = $scope.reddit_name
     Utils.collapse_all($scope.comment_data.children)
@@ -71,7 +72,7 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
       $scope.ep_details.images[ind+1] = $scope.ep_details.images[0]
       $scope.ep_details.images[0] = selected_image
       $scope.save_changes()
-      angular.forEach $scope.ep_details.battles, (value) ->
+      angular.forEach $scope.ep_details.matches, (value) ->
         new_text = $scope.reddit_name + "\n" + selected_image + "\n" + $scope.title
         RedditApi.post("/api/editusertext", api_type: "json", text: new_text, thing_id: "t1_" + value)
 
@@ -91,7 +92,6 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
       $scope.update_comment_tree($scope.comment_data.children,new_comments.data[1].data.children)
 
   $scope.put_links_into_text = (text) ->
-    # html = text.replace(/https?:\/\/[^ ]+/g,'<a href="$&">$&</a>')
     html = text.replace(/https?:\/\/[^ ]+/g,'<div><img src="$&"></img></div>')
     $sce.trustAsHtml(html)
 

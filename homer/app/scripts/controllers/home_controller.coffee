@@ -5,7 +5,6 @@ app.controller "DummyHomeController", ($scope) ->
 app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager) ->
   $scope.tournament = TournamentManager
 
-
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
 
