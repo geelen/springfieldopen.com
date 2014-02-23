@@ -22,6 +22,15 @@ class RedditPoster
 	  HTTParty.get('https://oauth.reddit.com/api/v1/me.json', options)
 	end
 
+	def get_post post_id
+		body_hash = {}
+		options = {
+	    headers: @headers,
+	    body: hash_to_body(body_hash)
+	  }
+	  HTTParty.get("https://oauth.reddit.com/r/#{@subreddit}/comments/#{post_id}.json", options)
+	end
+
 	def post title, data
 		body_hash = {
       api_type: 'json',

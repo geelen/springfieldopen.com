@@ -109,7 +109,7 @@ class TournamentManager
 
 	def identify_rounds
 		@round_status = @rounds.map { |round| 
-			response = HTTParty.get(@base_url + "/comments/#{round['id']}.json")
+			response = @reddit_poster.get_post(round['id'])
 			JSON.parse(response.first['data']['children'].first['data']['selftext'])['status']
 		}
 		@log_file << "Rounds: "
