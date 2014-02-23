@@ -6,12 +6,6 @@ class TournamentCreator
 		@num_rounds = episodes.first["lineup"].length
 	end
 
-	def prepare_for_tournment
-		clear_subreddit
-		clear_episode_matches
-		create_rounds
-	end
-
 	def round_one_matches
 		return @round_one_matches if @round_one_matches
 		ep_pairs = @episodes.group_by { |ep| ep["lineup"].first }.values
@@ -26,19 +20,21 @@ class TournamentCreator
 		@round_one_name
 	end
 
-	private
-
 	def clear_subreddit
 		@reddit_poster.clear_subreddit
 	end
 
-	def create_rounds
+	def create_rounds tournament_start, round_duration, round_gap
 		1.upto(@num_rounds) { |r|
+			start_time = tournament_start + round_duration*(r-1)
+			end_time = start_time + round_duration - round_gap
 			if r == 1
-				response = @reddit_poster.post("Round #{r} Matches",{status: "open"})
+				data = {status: "open", start_time: start_time, end_time: end_time}
+				response = @reddit_poster.post("Round #{r} Matches", data)
 				@round_one_name = response['json']['data']['name']
 			else
-				@reddit_poster.post("Round #{r} Matches",{status: "pending"})
+				data = {status: "pending", start_time: start_time, end_time: end_time}
+				@reddit_poster.post("Round #{r} Matches", data)
 			end
 		}
 	end

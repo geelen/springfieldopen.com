@@ -13,11 +13,12 @@ class TournamentManager
 		@rounds = response['data']['children'].map { |r| r['data'] }
 		@episode_subreddit = "SpringfieldOpenEps"
 		@log_file = File.open(config.data_dir + "/log.txt", 'a')
+		@current_time = Time.now.utc
 		log_time
 	end
 
 	def log_time
-		@log_file << Time.now.to_s
+		@log_file << @current_time.to_s
 		@log_file << "\n"
 	end
 
@@ -27,8 +28,12 @@ class TournamentManager
 
 	def begin_tournament
 		tournament_creator = TournamentCreator.new(@reddit_poster,episodes)
-		@log_file << "Preparing for tournament...\n"
-		tournament_creator.prepare_for_tournment
+		@log_file << "Clearing subreddit...\n"
+		tournament_creator.clear_subreddit
+		@log_file << "Clearing matches from each episode...\n"
+		tournament_creator.clear_episode_matches
+		@log_file << "Creating rounds...\n"
+		tournament_creator.create_rounds(@current_time.to_i, @round_duration, @round_gap)
 		@log_file << "Creating round one matches...\n"
 		matches = tournament_creator.round_one_matches
 		round_name = tournament_creator.round_one_name
@@ -37,11 +42,6 @@ class TournamentManager
 	end
 
 	def perform_update_if_its_time
-		@time_elapsed = calculate_elapsed_time
-		@log_file << "Time elapsed: "
-		@log_file << (@time_elapsed/60).floor
-		@log_file << " min(s)\n"
-		@time_buffer = 0.01
 		updater = TournamentUpdater.new(@reddit_poster)
 		identify_rounds		
 		if time_to_end_the_round
@@ -57,10 +57,10 @@ class TournamentManager
 				match_creator.create_matches(matches)
 			end
 			@log_file << "Closing round...\n"
-			updater.close_current_round(open_round_name,upcoming_round_name)
+			updater.close_current_round(open_round_name,open_round_data,upcoming_round_name,upcoming_round_data)
 		elsif time_to_start_the_next_round
 			@log_file << "Starting next round...\n"
-			updater.open_next_round(upcoming_round_name)		
+			updater.open_next_round(upcoming_round_name,upcoming_round_data)		
 		else
 			@log_file << "Nothing to do currently...\n"
 		end
@@ -100,11 +100,6 @@ class TournamentManager
 		else
 			[]
 		end
-	end
-
-	def calculate_elapsed_time
-		tournament_start_time = @rounds.first['created_utc']
-		Time.now.utc.to_i - tournament_start_time
 	end
 
 	def identify_rounds
@@ -149,19 +144,25 @@ class TournamentManager
 		upcoming_round ? upcoming_round['name'] : nil
 	end
 
+	def open_round_data
+		open_round ? JSON.parse(open_round['selftext']) : {}
+	end
+
+	def upcoming_round_data
+		upcoming_round ? JSON.parse(upcoming_round['selftext']) : {}
+	end
+
 	def time_to_end_the_round
-		if open_round_number
-			t = @time_elapsed - @round_duration*(open_round_number-1)
-			t > (@round_duration - @round_gap) - @time_buffer
+		if open_round
+			@current_time.to_i > open_round_data['end_time'].to_i
 		else
 			false
 		end
 	end
 
 	def time_to_start_the_next_round
-		if upcoming_round_number && !open_round_number
-			t = @time_elapsed - @round_duration*(upcoming_round_number-1)
-			t > -@time_buffer
+		if upcoming_round && !open_round
+			@current_time.to_i > upcoming_round_data['start_time'].to_i
 		else
 			false
 		end

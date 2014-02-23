@@ -63,15 +63,18 @@ class TournamentUpdater
 		}
 	end
 	
-	def close_current_round current_round_name, upcoming_round_name
-		@reddit_poster.replace_text(current_round_name, {status: 'closed'})
+	def close_current_round current_round_name, current_round_data, upcoming_round_name, upcoming_round_data
+		current_round_data['status'] = 'closed'
+		@reddit_poster.replace_text(current_round_name, current_round_data)
 		if upcoming_round_name
-			@reddit_poster.replace_text(upcoming_round_name, {status: 'ready'})
+			upcoming_round_data['status'] = 'ready'
+			@reddit_poster.replace_text(upcoming_round_name, upcoming_round_data)
 		end
 	end
 
-	def open_next_round upcoming_round_name
-		@reddit_poster.replace_text(upcoming_round_name, {status: 'open'})
+	def open_next_round upcoming_round_name, upcoming_round_data
+		upcoming_round_data['status'] = 'open'
+		@reddit_poster.replace_text(upcoming_round_name, upcoming_round_data)
 	end
 
 	private

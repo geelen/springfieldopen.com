@@ -31,6 +31,15 @@ class RedditPoster
 	  HTTParty.get("https://oauth.reddit.com/r/#{@subreddit}/comments/#{post_id}.json", options)
 	end
 
+	def get_subreddit
+		body_hash = {}
+		options = {
+	    headers: @headers,
+	    body: hash_to_body(body_hash)
+	  }
+	  HTTParty.get("https://oauth.reddit.com/r/#{@subreddit}.json", options)
+	end
+
 	def post title, data
 		body_hash = {
       api_type: 'json',
@@ -59,13 +68,12 @@ class RedditPoster
 	end
 
 	def clear_subreddit
-		url = "http://www.reddit.com/r/#{@subreddit}.json"
-		response = HTTParty.get(url)
+		response = get_subreddit
 		while response['data']['children'].length > 0
 			response['data']['children'].each { |post|
 				response = delete(post['data']['name'])
 			}
-			response = HTTParty.get(url)
+			response = get_subreddit
 		end
 	end
 
