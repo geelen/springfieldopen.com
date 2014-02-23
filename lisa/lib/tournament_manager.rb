@@ -109,10 +109,11 @@ class TournamentManager
 
 	def identify_rounds
 		@round_status = @rounds.map { |round| 
-			JSON.parse(round['selftext'])['status']
+			response = HTTParty.get(@base_url + "/comments/#{round['id']}.json")
+			JSON.parse(response.first['data']['children'].first['data']['selftext'])['status']
 		}
 		@log_file << "Rounds: "
-		@log_file << @round_status.to_s
+		@log_file << @round_status.reverse.to_s
 		@log_file << "\n"
 		@open_index = @round_status.find_index { |s| s == 'open' }
 		if @open_index && @open_index > 0
