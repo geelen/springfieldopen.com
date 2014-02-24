@@ -5,6 +5,13 @@ app.controller "DummyHomeController", ($scope) ->
 app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager) ->
   $scope.tournament = TournamentManager
 
+  set_time_until_event = () ->
+    time = $scope.tournament.time_until_next_event()  
+    $scope.mins_until_next_event = Math.floor(time/60)
+    $scope.secs_until_next_event = time - $scope.mins_until_next_event*60
+    setTimeout(set_time_until_event, 100)
+  set_time_until_event()
+
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
 

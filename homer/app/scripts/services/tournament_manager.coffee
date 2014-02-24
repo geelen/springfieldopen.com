@@ -31,12 +31,42 @@ app.factory 'TournamentManager', (RedditApi) ->
       open_round = (rounds.filter (c) -> 
         angular.fromJson(c.data.selftext)['status'] == "open"
       )[0]
+      ready_round = (rounds.filter (c) -> 
+        angular.fromJson(c.data.selftext)['status'] == "ready"
+      )[0]
       if open_round
         round_post = open_round.data.id
         console.log(open_round.data.title)
+        end_time = angular.fromJson(open_round.data.selftext)['end_time']
+        console.log(end_time)
+        TournamentManager.time_of_next_event = end_time
+        TournamentManager.status = "round_in_progress"
         RedditApi.get("/comments/#{round_post}.json").then (response) ->
           TournamentManager.battles = response.data[1].data.children.map (c) ->
             load_battle(c.data.replies.data.children)
+      else if ready_round
+        start_time = angular.fromJson(ready_round.data.selftext)['start_time']
+        TournamentManager.time_of_next_event = start_time
+        console.log(start_time)
+        TournamentManager.status = "between_rounds"
+      else
+        TournamentManager.status = "tournament_over"
+        console.log("Tournament is over")
+
+  TournamentManager.round_in_progress = () ->
+    TournamentManager.status == "round_in_progress"
+
+  TournamentManager.between_rounds = () ->
+    TournamentManager.status == "between_rounds"
+
+  TournamentManager.tournament_over = () ->
+    TournamentManager.status == "tournament_over"
+
+  TournamentManager.time_until_next_event = () ->
+    if TournamentManager.time_of_next_event
+      TournamentManager.time_of_next_event - Math.floor(Date.now()/1000)
+    else
+      0
 
   TournamentManager.update_battles()
   TournamentManager

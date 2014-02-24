@@ -22,7 +22,18 @@
 <section class="battle-list">
 
   <header class="battle-list-header">
-    <h1>Matches in progress:</h1>
+    <div ng-if="tournament.tournament_over()">
+      <h1>Tournament has ended</h1>
+    </div>
+    <div ng-if="tournament.round_in_progress()">
+      <h1>Round in progess</h1>
+      <h2>Closes in {{mins_until_next_event}}:{{secs_until_next_event}}</h2>
+      <h2>Matches in progress:</h2>
+    </div>
+    <div ng-if="tournament.between_rounds()">
+      <h1>Round over</h1>
+      <h2>New round begins in {{time_until_next_event}}s</h2>
+    </div>
   </header>
 
   <div class="battle is-open" ng-repeat="item in tournament.battles">
@@ -61,10 +72,6 @@
         >
       </div>
     </div>
-  </div>
-
-  <div style="text-align: center" ng-if="tournament.battles.length == 0">
-    <h1>There are no currently open rounds!</h1>
   </div>
 
 </section>
