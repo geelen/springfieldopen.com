@@ -27,7 +27,7 @@
     </div>
     <div ng-if="tournament.round_in_progress()">
       <h1>Round in progess</h1>
-      <h2>Closes in {{mins_until_next_event}}:{{secs_until_next_event}}</h2>
+      <h2>Closes in {{time_until_next_event | date:'m:ss'}}</h2>
       <h2>Matches in progress:</h2>
     </div>
     <div ng-if="tournament.between_rounds()">

@@ -32,8 +32,16 @@ app.controller "EpisodeController", ($scope, $stateParams, RedditApi, Utils, $sc
         nearby_episodes_map[episode.ep_name.split("_")[1]] = ep_list
       nearby_episodes = []
 
-  $scope.upcoming = nearby_episodes_map[$stateParams.episode_id]
+  $scope.upcoming = nearby_episodes_map[$stateParams.episode_id].map (ep) ->
+    ep.current_ep = ($stateParams.episode_id == ep.ep_name.split("_")[1])
+    ep
   console.log($scope.upcoming)
+
+  $scope.upcoming_current_class = (upcoming_episode) ->
+    if upcoming_episode.current_ep 
+      'upcoming-current' 
+    else 
+      ''
 
   RedditApi.get("/api/v1/me.json").then (response) ->
     $scope.currentUser = response.data

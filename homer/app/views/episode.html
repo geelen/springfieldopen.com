@@ -17,8 +17,8 @@
 </div>
 
 <div class="episode-overview-box">
-	<h3>Upcoming Episodes</h3>
-	<div ng-repeat="upcoming_episode in upcoming">
+	<h3>Upcoming Head-to-heads</h3>
+	<div class="upcoming-episode-{{$index % 2}} {{upcoming_current_class(upcoming_episode)}}" ng-repeat="upcoming_episode in upcoming">
 		{{upcoming_episode.ep_full_title}}
 	</div>		
 </div>

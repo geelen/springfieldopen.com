@@ -2,15 +2,19 @@ app = angular.module 'homerApp'
 
 app.controller "DummyHomeController", ($scope) ->
 
-app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager) ->
+app.controller "HomeController", ($scope, $filter, RedditApi, TournamentManager, $timeout) ->
   $scope.tournament = TournamentManager
+  current_time = 0
 
-  set_time_until_event = () ->
-    time = $scope.tournament.time_until_next_event()  
-    $scope.mins_until_next_event = Math.floor(time/60)
-    $scope.secs_until_next_event = time - $scope.mins_until_next_event*60
-    setTimeout(set_time_until_event, 100)
-  set_time_until_event()
+  update_current_time = () ->
+    current_time = Math.floor(Date.now()/1000)
+    if TournamentManager.time_of_next_event && current_time
+      new_time = 1000*(TournamentManager.time_of_next_event - current_time)
+    else
+      new_time = 0
+    $scope.time_until_next_event = new_time
+    $timeout(update_current_time, 100)
+  update_current_time()
 
   $scope.short_name = (long_name) ->
     long_name.split("_")[1]
