@@ -60,7 +60,7 @@ class TournamentManager
 			updater.close_current_round(open_round_name,open_round_data,upcoming_round_name,upcoming_round_data)
 		elsif time_to_start_the_next_round
 			@log_file << "Starting next round...\n"
-			updater.open_next_round(upcoming_round_name,upcoming_round_data)		
+			updater.open_next_round(upcoming_round_name,upcoming_round_data)
 		else
 			@log_file << "Nothing to do currently...\n"
 		end

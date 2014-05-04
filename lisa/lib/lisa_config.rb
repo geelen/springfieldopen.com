@@ -24,8 +24,8 @@ class LisaConfig
       data_dir: File.expand_path(File.dirname(__FILE__) + '/../data/staging'),
       subreddit: 'SpringfieldOpenTest',
       total_episodes: 8,
-      round_duration: 600, #10.minutes
-      round_gap: 120, #2.minutes
+      round_duration: 3600, # 600 = 10.minutes
+      round_gap: 300, # 120 = 2.minutes
     })
   end
 end

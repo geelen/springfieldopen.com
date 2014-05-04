@@ -4,11 +4,12 @@ require 'cgi'
 class RedditPoster
 
 	def initialize refresh_token, subreddit
+		@reddit_oauth_url = "https://oauth.reddit.com/"
+		@subreddit = subreddit
 		@headers = {
 	    "authorization" => "bearer " + get_auth_token(refresh_token),
 	    'Content-Type' => 'application/x-www-form-urlencoded'
 	  }
-	  @subreddit = subreddit
 	end
 
 	def get_user
@@ -19,7 +20,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.get('https://oauth.reddit.com/api/v1/me.json', options)
+	  HTTParty.get(@reddit_oauth_url + 'api/v1/me.json', options)
 	end
 
 	def get_post post_id
@@ -28,7 +29,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.get("https://oauth.reddit.com/r/#{@subreddit}/comments/#{post_id}.json", options)
+	  HTTParty.get(@reddit_oauth_url + "r/#{@subreddit}/comments/#{post_id}.json", options)
 	end
 
 	def get_subreddit
@@ -37,7 +38,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.get("https://oauth.reddit.com/r/#{@subreddit}.json", options)
+	  HTTParty.get(@reddit_oauth_url + "r/#{@subreddit}.json", options)
 	end
 
 	def post title, data
@@ -53,7 +54,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.post('https://oauth.reddit.com/api/submit.json', options)
+	  HTTParty.post(@reddit_oauth_url + 'api/submit.json', options)
 	end
 
 	def delete thingname
@@ -64,7 +65,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.post('https://oauth.reddit.com/api/del', options)
+	  HTTParty.post(@reddit_oauth_url + 'api/del', options)
 	end
 
 	def clear_subreddit
@@ -88,7 +89,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.post('https://oauth.reddit.com/api/editusertext.json', options)
+	  HTTParty.post(@reddit_oauth_url + 'api/editusertext.json', options)
 	end
 
 	def comment thingname, data
@@ -101,7 +102,7 @@ class RedditPoster
 	    headers: @headers,
 	    body: hash_to_body(body_hash)
 	  }
-	  HTTParty.post('https://oauth.reddit.com/api/comment.json', options)
+	  HTTParty.post(@reddit_oauth_url + 'api/comment.json', options)
 	end
 
 	private
