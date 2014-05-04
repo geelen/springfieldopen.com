@@ -16,5 +16,5 @@ Then you can jump onto a Battle page, which actually pulls the data from Reddit,
 ## Cron stuff
 
 ```
-* * * * * cd ~/Documents/springfieldopen.com/lisa; /Users/glen/.rbenv/versions/1.9.3-p125/bin/ruby tasks/update_tournament.rb
+* * * * * cd ~/Documents/springfieldopen.com/lisa; ruby tasks/update_tournament.rb
 ```
